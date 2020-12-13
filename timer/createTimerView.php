@@ -3,6 +3,7 @@ $css = "./style.css";
 $title = "Timer ChronoFit";
 $js = "./js/createTimer.js";
 $js2 = "./js/d&d.js";
+
 ob_start();
 ?>
 <h1>TIMER  <span>Create countdown</span></h1>
@@ -34,7 +35,7 @@ ob_start();
     <input type="number" name="duration" class="timer__container__creation__duration" id="duration">
 
     <button id="addInterval" class="--big-button">Ajouter l'interval</button>
-    <button id="readTimelineButton" class="--big-button">Lancer la Timeline</button>
+    <button id="goToReadTimelineButton" class="--big-button">Lancer la Timeline</button>
   </div>
 </div>
 
@@ -54,7 +55,7 @@ ob_start();
 
     <div class="timer__container__controls">
       <button id="timerStartButton" class="--big-button">START</button>
-      <button id="timerStopButton" class="--big-button">PAUSE</button>
+      <button id="timerPauseButton" class="--big-button">PAUSE</button>
     </div>
   </div>
 </div>
