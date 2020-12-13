@@ -1,7 +1,7 @@
 @font-face {
-  font-family: 'nobileregular';
-  src: url('../fonts/nobile-regular-webfont.woff2') format('woff2'),
-    url('../fonts/nobile-regular-webfont.woff') format('woff');
+  font-family: "nobileregular";
+  src: url("../fonts/nobile-regular-webfont.woff2") format("woff2"),
+    url("../fonts/nobile-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -12,7 +12,7 @@
   --color-border: grey;
   --color-interval-normal: rgb(194, 227, 255);
   --color-font-dark: rgb(56, 56, 56);
-  --color-font-light: rgb(224, 224, 224);
+  --color-font-light: rgb(236, 236, 236);
 }
 
 /* --- COMMON --- */
@@ -20,7 +20,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'nobileregular';
+  font-family: "nobileregular";
 }
 
 a {
@@ -83,22 +83,6 @@ h1 span {
   fieldset {
     width: 100%;
     margin: 10px 0;
-  }
-}
-
-.big-button {
-  background-color: var(--color-button);
-  width: 100%;
-  font-size: 18px;
-  font-weight: bold;
-  color: var(--color-font-light);
-  padding: 20px;
-  margin: 5px;
-  border-radius: 10px;
-  cursor: pointer;
-
-  & a {
-    color: var(--color-font-light);
   }
 }
 
@@ -236,8 +220,27 @@ form {
   font-size: 10px;
 }
 
+/* --- MODIFIER --- */
 .--trash {
   background-color: var(--color-border);
   color: var(--color-font-light);
   font-weight: 700;
+}
+
+.--big-button {
+  background-color: var(--color-button);
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-font-light);
+  padding: 20px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  & a {
+    color: var(--color-font-light);
+    display: block;
+    width: 100%;
+  }
 }

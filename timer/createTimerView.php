@@ -33,15 +33,31 @@ ob_start();
     <label for="duration">Durée (s):</label>
     <input type="number" name="duration" class="timer__container__creation__duration" id="duration">
 
-    <button id="addInterval" class="big-button">Ajouter l'interval</button>
-    <button id="readTimelineButton" class="big-button">GO</button>
+    <button id="addInterval" class="--big-button">Ajouter l'interval</button>
+    <button id="readTimelineButton" class="--big-button">Lancer la Timeline</button>
   </div>
 </div>
 
+<!-- ### A VOIR POUR CRUD TIMELINE ###
+
 <form action="indexTimer.php?routeur=readTimeline" method="post">
   <textarea name="timelineData" id="timelineData" cols="10" rows="3"></textarea>
-  <button id="submitTimelineData" type="submit" class="big-button">GO</button>
+  <button id="submitTimelineData" type="submit" class="--big-button">Valider Enregistrement</button>
 </form>
+
+-->
+
+<div class="timer__container">
+  <div class="timer__container__read">
+    <div class="timer__container__read__close">X</div>
+    <div class="timer__container__timeDisplay"  id="timerDisplay">00:00</div>
+
+    <div class="timer__container__controls">
+      <button id="timerStartButton" class="--big-button">START</button>
+      <button id="timerStopButton" class="--big-button">PAUSE</button>
+    </div>
+  </div>
+</div>
 
 <?php
 $content = ob_get_clean();
