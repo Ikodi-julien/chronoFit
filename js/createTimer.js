@@ -20,6 +20,10 @@ const goToReadTimelineButton = document.getElementById(
 let intervalsCollection = null;
 let durationList = [];
 let isListening = false;
+let isReading = false;
+let timerPromise = 0;
+let chronoId = [];
+let firstCountdown = true;
 
 /* --- LISTENER CREATE TIMER --- */
 // Ajoute une intervalle à la Timeline
@@ -72,36 +76,62 @@ goToReadTimelineButton.addEventListener("click", () => {
 
 // Lance le countdown
 startCountDownButton.addEventListener("click", () => {
-  console.log("durée du 1er : " + durationList[0]);
+  // On ajoute 5 secondes au début si c'est le premier démarrage
+  if (firstCountdown) {
+    durationList.unshift(5);
+    firstCountdown = false;
+  }
+  console.log("Start, contenu liste : " + durationList);
   // On envoi la fonction asynchrone de CAR
-  awaitCountDown(durationList);
+  awaitCountDown();
 });
 
 // Eventlistener sur le "X" et le "<-"
 
 /* --- FUNCTIONS READ COUNTDOWN --- */
-const promiseCountDown = function (durationList) {
+
+/**
+ * Promise awaited by awaitCountdown(),
+ * Pause button = resolve(false)
+ * Countdown ends = resolve(true)
+ */
+const promiseCountDown = () => {
   return new Promise((resolve) => {
     // Création d'un chrono chargé de cet interval
     let duration = durationList.shift();
-    const chrono = new Chrono(duration, display);
+    let chrono = new Chrono(duration, display);
+    chronoId.unshift(chrono);
 
     // Démarrage du CAR
-    chrono.countDown();
+    chronoId[0].countDown();
+    isReading = true;
 
     // Timeout de la Promise
-    let timerPromise = setTimeout(function () {
-      resolve(true);
-      console.log("La promesse countDown est terminée " + chrono.startTime);
-    }, duration * 1000 + 1000);
+    if (isReading) {
+      timerPromise = setTimeout(() => {
+        isReading = false;
+        resolve(true);
+        chronoId = [];
+        console.log("La promesse est true");
+      }, duration * 1000 + 1000);
+    }
 
     // Fonction appelée en cas de pause du countdown
     const pauseCountdown = () => {
-      let stopTime = chrono.stop();
-      console.log("temps récup : " + stopTime);
-      durationList.unshift(stopTime);
-      clearTimeout(timerPromise);
-      resolve(false);
+      if (isReading) {
+        // On arrête le chrono
+        let stopTime = chronoId[0].stop();
+        isReading = false;
+        console.log("Pause, temps récup : " + stopTime);
+
+        // On ajoute le temps restant au début de la liste
+        durationList.unshift(stopTime);
+
+        // On clear la Promise
+        clearTimeout(timerPromise);
+        console.log("DurationList après unshift() : " + durationList);
+        resolve(false);
+      }
     };
 
     // Création listener pour arrêt du chrono
@@ -112,24 +142,30 @@ const promiseCountDown = function (durationList) {
   });
 };
 
-const awaitCountDown = async function (durationList) {
+/**
+ * Launches countdowns and await promise if paused or finished.
+ */
+const awaitCountDown = async function () {
+  // On enchaine les countdown si pas de pause
   let again = true;
 
   while (durationList.length && again) {
-    console.log("Taille liste durées : " + durationList.length);
+    console.log("Taille liste durées : " + durationList);
 
-    let resolve = await promiseCountDown(durationList);
+    // La Promise est résolue si fin du countdown ou pause
+    let resolve = await promiseCountDown();
 
     console.log("resolve : " + resolve);
     console.log("prochain : " + durationList[0]);
 
     if (!resolve) {
       again = false;
-      console.log("Taille liste !result : " + durationList.length);
+      console.log("!result contenu liste: " + durationList);
 
       return false;
     }
   }
 
-  return durationList.length;
+  // On pourra remettre 5s au début si relance d'une timeline
+  firstCountdown = true;
 };

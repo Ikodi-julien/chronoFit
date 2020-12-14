@@ -160,6 +160,13 @@ form input {
   align-items: center;
   width: 100%;
 }
+.timer__container__read__close {
+  align-self: flex-end;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 50%;
+  margin: 10px;
+}
 .timer__container__timeDisplay {
   width: 100%;
   font-size: 120px;

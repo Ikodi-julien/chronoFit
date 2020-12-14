@@ -60,6 +60,18 @@ ob_start();
   </div>
 </div>
 
+<embed 
+src="./sounds/first_bips.wav" 
+autostart="false" 
+width="0" height="0" id="firstBip"
+enablejavascript="true">
+
+<embed 
+src="./sounds/final_bip.wav" 
+autostart="false" 
+width="0" height="0" id="finalBip"
+enablejavascript="true">
+
 <?php
 $content = ob_get_clean();
 require("./common/templateModules.php");
