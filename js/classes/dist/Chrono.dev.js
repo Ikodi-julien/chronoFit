@@ -65,12 +65,14 @@ function () {
         if (_this2.startTime <= 0) {
           clearInterval(_this2.interval);
         } else {
-          if (_this2.startTime > 0 && _this2.startime < 5) {
+          _this2.startTime -= 1;
+          _this2.display.innerText = _this2.startTime;
+
+          if (_this2.startTime > 0 && _this2.startTime < 5) {
             _this2.playFirstBip();
           }
 
-          _this2.startTime -= 1;
-          _this2.display.innerText = _this2.startTime;
+          if (_this2.startTime == 0) _this2.playFinalBip();
         }
       };
 
@@ -87,9 +89,16 @@ function () {
   }, {
     key: "playFirstBip",
     value: function playFirstBip() {
-      var firstBip = document.getElementById("firstBip");
-      firstBip.play();
       console.log("on fait Bip !");
+      var firstBip = new Audio("./sounds/first_bips.wav");
+      firstBip.play();
+    }
+  }, {
+    key: "playFinalBip",
+    value: function playFinalBip() {
+      console.log("on fait le bip final !");
+      var finalBip = new Audio("./sounds/final_bip.wav");
+      finalBip.play();
     }
   }]);
 

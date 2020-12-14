@@ -35,7 +35,7 @@ ob_start();
     <input type="number" name="duration" class="timer__container__creation__duration" id="duration">
 
     <button id="addInterval" class="--big-button">Ajouter l'interval</button>
-    <button id="goToReadTimelineButton" class="--big-button">Lancer la Timeline</button>
+    <button id="goToReadTimelineButton" class="--big-button">Valider la Timeline</button>
   </div>
 </div>
 
@@ -59,18 +59,6 @@ ob_start();
     </div>
   </div>
 </div>
-
-<embed 
-src="./sounds/first_bips.wav" 
-autostart="false" 
-width="0" height="0" id="firstBip"
-enablejavascript="true">
-
-<embed 
-src="./sounds/final_bip.wav" 
-autostart="false" 
-width="0" height="0" id="finalBip"
-enablejavascript="true">
 
 <?php
 $content = ob_get_clean();

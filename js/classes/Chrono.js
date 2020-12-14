@@ -40,11 +40,13 @@ class Chrono {
       if (this.startTime <= 0) {
         clearInterval(this.interval);
       } else {
-        if (this.startTime > 0 && this.startime < 5) {
-          this.playFirstBip();
-        }
         this.startTime -= 1;
         this.display.innerText = this.startTime;
+
+        if (this.startTime > 0 && this.startTime < 5) {
+          this.playFirstBip();
+        }
+        if (this.startTime == 0) this.playFinalBip();
       }
     };
     this.interval = setInterval(aRepeter, 1000);
@@ -58,9 +60,17 @@ class Chrono {
   }
 
   playFirstBip() {
-    let firstBip = document.getElementById("firstBip");
-    firstBip.play();
     console.log("on fait Bip !");
+
+    let firstBip = new Audio("./sounds/first_bips.wav");
+    firstBip.play();
+  }
+
+  playFinalBip() {
+    console.log("on fait le bip final !");
+
+    let finalBip = new Audio("./sounds/final_bip.wav");
+    finalBip.play();
   }
 }
 

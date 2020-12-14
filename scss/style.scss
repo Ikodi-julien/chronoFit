@@ -13,6 +13,7 @@
   --color-interval-normal: rgb(194, 227, 255);
   --color-font-dark: rgb(56, 56, 56);
   --color-font-light: rgb(236, 236, 236);
+  --border-radius: 3px;
 }
 
 /* --- COMMON --- */
@@ -50,7 +51,7 @@ header {
       padding: 15px 5px;
       margin: 5px;
       border: 1px solid var(--color-border);
-      border-radius: 5px;
+      border-radius: var(--border-radius);
     }
   }
 }
@@ -126,7 +127,7 @@ form {
     min-height: 600px;
     margin-top: 15px;
     border: 1px solid var(--color-border);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
 
     &__intervals {
       display: flex;
@@ -182,7 +183,7 @@ form {
         align-self: flex-end;
         padding: 10px;
         border: 1px solid black;
-        border-radius: 50%;
+        border-radius: var(--border-radius);
         margin: 10px;
       }
     }
@@ -208,7 +209,7 @@ form {
   flex-direction: column;
   align-items: center;
   background-color: var(--color-interval-normal);
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   color: var(--color-font-dark);
   font-weight: 700;
 }
@@ -216,7 +217,7 @@ form {
 .drop {
   min-height: 10px;
   border: 1px solid var(--color-border);
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   margin: 2px;
   background-color: var(--color-blue-chronoFit);
 }
@@ -243,7 +244,7 @@ form {
   color: var(--color-font-light);
   padding: 20px;
   margin: 5px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   cursor: pointer;
 
   & a {
