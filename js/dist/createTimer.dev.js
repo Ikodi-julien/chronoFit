@@ -16,8 +16,10 @@ var startCountDownButton = document.querySelector("#timerStartButton");
 var stopChronoButton = document.querySelector("#timerPauseButton");
 var display = document.getElementById("timerDisplay");
 var goToReadTimelineButton = document.getElementById("goToReadTimelineButton");
+var exoNameDisplay = document.getElementById("exoNameDisplay");
 var intervalsCollection = null;
 var durationList = [];
+var exoNameList = [];
 var isListening = false;
 var isReading = false;
 var timerPromise = 0;
@@ -50,26 +52,37 @@ addIntervalButton.addEventListener("click", function () {
 // Créé la liste des éléments à lire et affiche la vue countdown
 
 goToReadTimelineButton.addEventListener("click", function () {
-  // Toggle une classe qui fait apparaitre la vue du countdown
   // On récup les intervals à lire
   intervalsCollection = document.getElementsByClassName("interval");
   console.log("liste des éléments interval");
-  console.log(intervalsCollection); // On récupère la durée des intervals à lire
+  console.log(intervalsCollection);
 
-  for (var i = 0; i < intervalsCollection.length; i++) {
-    var duration = intervalsCollection.item(i).childNodes.item(1).innerText;
-    durationList.push(duration);
+  if (intervalsCollection.length) {
+    // On récupère la durée des intervals à lire
+    for (var i = 0; i < intervalsCollection.length; i++) {
+      var duration = intervalsCollection.item(i).childNodes.item(1).innerText;
+      durationList.push(duration);
+    } // On récupère les noms des intervals à lire
+
+
+    for (var _i = 0; _i < intervalsCollection.length; _i++) {
+      var exoName = intervalsCollection.item(_i).childNodes.item(0).innerText;
+      exoNameList.push(exoName);
+    } // Toggle une classe qui fait apparaitre la vue du countdown
+
   }
 }); // Lance le countdown
 
 startCountDownButton.addEventListener("click", function () {
-  // On ajoute 5 secondes au début si c'est le premier démarrage
+  // On ajoute 5 secondes de prépa "READY ?" au début si c'est le premier démarrage
   if (firstCountdown) {
     durationList.unshift(5);
+    exoNameList.unshift("READY ?");
     firstCountdown = false;
   }
 
-  console.log("Start, contenu liste : " + durationList); // On envoi la fonction asynchrone de CAR
+  console.log("Start, contenu durées : " + durationList);
+  console.log("Start, contenu exoName : " + exoNameList); // On envoi la fonction asynchrone de CAR
 
   awaitCountDown();
 }); // Eventlistener sur le "X" et le "<-"
@@ -107,9 +120,10 @@ var promiseCountDown = function promiseCountDown() {
         // On arrête le chrono
         var stopTime = chronoId[0].stop();
         isReading = false;
-        console.log("Pause, temps récup : " + stopTime); // On ajoute le temps restant au début de la liste
+        console.log("Pause, temps récup : " + stopTime); // On ajoute le temps restant et le nom au début de la liste
 
-        durationList.unshift(stopTime); // On clear la Promise
+        durationList.unshift(stopTime);
+        exoNameList.unshift(exoNameDisplay.innerText); // On clear la Promise
 
         clearTimeout(timerPromise);
         console.log("DurationList après unshift() : " + durationList);
@@ -140,38 +154,42 @@ var awaitCountDown = function awaitCountDown() {
 
         case 1:
           if (!(durationList.length && again)) {
-            _context.next = 14;
+            _context.next = 18;
             break;
           }
 
-          console.log("Taille liste durées : " + durationList); // La Promise est résolue si fin du countdown ou pause
+          console.log("Liste durées : " + durationList);
+          console.log("Liste exoName : " + exoNameList);
+          exoNameDisplay.innerText = exoNameList.shift(); // La Promise est résolue si fin du countdown ou pause
 
-          _context.next = 5;
+          _context.next = 7;
           return regeneratorRuntime.awrap(promiseCountDown());
 
-        case 5:
+        case 7:
           resolve = _context.sent;
           console.log("resolve : " + resolve);
-          console.log("prochain : " + durationList[0]);
+          console.log("prochaine durée : " + durationList[0]);
+          console.log("prochain exoName : " + durationList[0]);
 
           if (resolve) {
-            _context.next = 12;
+            _context.next = 16;
             break;
           }
 
           again = false;
-          console.log("!result contenu liste: " + durationList);
+          console.log("!result contenu durées: " + durationList);
+          console.log("!result contenu exoName: " + exoNameList);
           return _context.abrupt("return", false);
 
-        case 12:
+        case 16:
           _context.next = 1;
           break;
 
-        case 14:
+        case 18:
           // On pourra remettre 5s au début si relance d'une timeline
           firstCountdown = true;
 
-        case 15:
+        case 19:
         case "end":
           return _context.stop();
       }

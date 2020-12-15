@@ -17,7 +17,7 @@
 }
 
 /* --- COMMON --- */
-* {
+html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -133,43 +133,35 @@ form {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 35%;
+      width: 50%;
       height: 100%;
       padding: 1%;
-      // border: 1px solid blue;
+      border: 1px solid blue;
       &__list {
         display: flex;
         flex-direction: column;
-        // border: 1px solid rgb(28, 139, 0);
+        border: 1px solid rgb(28, 139, 0);
       }
     }
 
     &__creation {
-      width: 60%;
+      width: 50%;
       padding: 1% 1% 1% 2%;
-      min-height: 350px;
+      height: 400px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: space-evenly;
+      border: 1px solid yellow;
 
       &__duration {
-        width: 100%;
+        width: 97%;
         font-size: 30px;
-      }
-
-      &__time {
-        width: 100%;
-        font-size: 60px;
-        text-align: center;
-        width: 80%;
-        height: 80px;
-        // border: 1px solid fuchsia;
       }
 
       &__intervalName {
         font-size: 18px;
-        width: 100%;
+        width: 97%;
       }
     }
 
@@ -186,11 +178,17 @@ form {
         border-radius: var(--border-radius);
         margin: 10px;
       }
+
+      &__exoName {
+        width: 100%;
+        font-size: 50px;
+        text-align: center;
+      }
     }
 
     &__timeDisplay {
       width: 100%;
-      font-size: 120px;
+      font-size: 100px;
       text-align: center;
     }
   }
@@ -222,12 +220,12 @@ form {
   background-color: var(--color-blue-chronoFit);
 }
 
-#timelineData {
-  width: 100%;
-  min-height: 10px;
-  border: 1px solid fuchsia;
-  font-size: 10px;
-}
+// #timelineData {
+//   width: 100%;
+//   min-height: 10px;
+//   border: 1px solid fuchsia;
+//   font-size: 10px;
+// }
 
 /* --- MODIFIER --- */
 .--trash {
@@ -238,12 +236,12 @@ form {
 
 .--big-button {
   background-color: var(--color-button);
-  width: 100%;
+  width: 97%;
   font-size: 18px;
   font-weight: bold;
   color: var(--color-font-light);
-  padding: 20px;
-  margin: 5px;
+  padding: 20px 0;
+  margin: 20px 0;
   border-radius: var(--border-radius);
   cursor: pointer;
 

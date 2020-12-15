@@ -15,7 +15,7 @@
 }
 
 /* --- COMMON --- */
-* {
+html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -123,37 +123,33 @@ form input {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 35%;
+  width: 50%;
   height: 100%;
   padding: 1%;
+  border: 1px solid blue;
 }
 .timer__container__intervals__list {
   display: flex;
   flex-direction: column;
+  border: 1px solid #1c8b00;
 }
 .timer__container__creation {
-  width: 60%;
+  width: 50%;
   padding: 1% 1% 1% 2%;
-  min-height: 350px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-evenly;
+  border: 1px solid yellow;
 }
 .timer__container__creation__duration {
-  width: 100%;
+  width: 97%;
   font-size: 30px;
-}
-.timer__container__creation__time {
-  width: 100%;
-  font-size: 60px;
-  text-align: center;
-  width: 80%;
-  height: 80px;
 }
 .timer__container__creation__intervalName {
   font-size: 18px;
-  width: 100%;
+  width: 97%;
 }
 .timer__container__read {
   display: flex;
@@ -168,9 +164,14 @@ form input {
   border-radius: var(--border-radius);
   margin: 10px;
 }
+.timer__container__read__exoName {
+  width: 100%;
+  font-size: 50px;
+  text-align: center;
+}
 .timer__container__timeDisplay {
   width: 100%;
-  font-size: 120px;
+  font-size: 100px;
   text-align: center;
 }
 .timer__trash {
@@ -198,13 +199,6 @@ form input {
   background-color: var(--color-blue-chronoFit);
 }
 
-#timelineData {
-  width: 100%;
-  min-height: 10px;
-  border: 1px solid fuchsia;
-  font-size: 10px;
-}
-
 /* --- MODIFIER --- */
 .--trash {
   background-color: var(--color-border);
@@ -214,12 +208,12 @@ form input {
 
 .--big-button {
   background-color: var(--color-button);
-  width: 100%;
+  width: 97%;
   font-size: 18px;
   font-weight: bold;
   color: var(--color-font-light);
-  padding: 20px;
-  margin: 5px;
+  padding: 20px 0;
+  margin: 20px 0;
   border-radius: var(--border-radius);
   cursor: pointer;
 }

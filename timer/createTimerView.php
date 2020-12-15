@@ -51,6 +51,7 @@ ob_start();
 <div class="timer__container">
   <div class="timer__container__read">
     <div class="timer__container__read__close">X</div>
+    <div class="timer__container__read__exoName"id="exoNameDisplay">Le nom de l'exo</div>
     <div class="timer__container__timeDisplay"  id="timerDisplay">00:00</div>
 
     <div class="timer__container__controls">

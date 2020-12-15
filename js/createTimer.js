@@ -16,9 +16,11 @@ const display = document.getElementById("timerDisplay");
 const goToReadTimelineButton = document.getElementById(
   "goToReadTimelineButton"
 );
+const exoNameDisplay = document.getElementById("exoNameDisplay");
 
 let intervalsCollection = null;
 let durationList = [];
+let exoNameList = [];
 let isListening = false;
 let isReading = false;
 let timerPromise = 0;
@@ -61,27 +63,38 @@ addIntervalButton.addEventListener("click", () => {
 // Créé la liste des éléments à lire et affiche la vue countdown
 
 goToReadTimelineButton.addEventListener("click", () => {
-  // Toggle une classe qui fait apparaitre la vue du countdown
   // On récup les intervals à lire
   intervalsCollection = document.getElementsByClassName("interval");
   console.log("liste des éléments interval");
   console.log(intervalsCollection);
 
-  // On récupère la durée des intervals à lire
-  for (let i = 0; i < intervalsCollection.length; i++) {
-    let duration = intervalsCollection.item(i).childNodes.item(1).innerText;
-    durationList.push(duration);
+  if (intervalsCollection.length) {
+    // On récupère la durée des intervals à lire
+    for (let i = 0; i < intervalsCollection.length; i++) {
+      let duration = intervalsCollection.item(i).childNodes.item(1).innerText;
+      durationList.push(duration);
+    }
+
+    // On récupère les noms des intervals à lire
+    for (let i = 0; i < intervalsCollection.length; i++) {
+      let exoName = intervalsCollection.item(i).childNodes.item(0).innerText;
+      exoNameList.push(exoName);
+    }
+
+    // Toggle une classe qui fait apparaitre la vue du countdown
   }
 });
 
 // Lance le countdown
 startCountDownButton.addEventListener("click", () => {
-  // On ajoute 5 secondes au début si c'est le premier démarrage
+  // On ajoute 5 secondes de prépa "READY ?" au début si c'est le premier démarrage
   if (firstCountdown) {
     durationList.unshift(5);
+    exoNameList.unshift("READY ?");
     firstCountdown = false;
   }
-  console.log("Start, contenu liste : " + durationList);
+  console.log("Start, contenu durées : " + durationList);
+  console.log("Start, contenu exoName : " + exoNameList);
   // On envoi la fonction asynchrone de CAR
   awaitCountDown();
 });
@@ -124,8 +137,9 @@ const promiseCountDown = () => {
         isReading = false;
         console.log("Pause, temps récup : " + stopTime);
 
-        // On ajoute le temps restant au début de la liste
+        // On ajoute le temps restant et le nom au début de la liste
         durationList.unshift(stopTime);
+        exoNameList.unshift(exoNameDisplay.innerText);
 
         // On clear la Promise
         clearTimeout(timerPromise);
@@ -150,17 +164,22 @@ const awaitCountDown = async function () {
   let again = true;
 
   while (durationList.length && again) {
-    console.log("Taille liste durées : " + durationList);
+    console.log("Liste durées : " + durationList);
+    console.log("Liste exoName : " + exoNameList);
+
+    exoNameDisplay.innerText = exoNameList.shift();
 
     // La Promise est résolue si fin du countdown ou pause
     let resolve = await promiseCountDown();
 
     console.log("resolve : " + resolve);
-    console.log("prochain : " + durationList[0]);
+    console.log("prochaine durée : " + durationList[0]);
+    console.log("prochain exoName : " + durationList[0]);
 
     if (!resolve) {
       again = false;
-      console.log("!result contenu liste: " + durationList);
+      console.log("!result contenu durées: " + durationList);
+      console.log("!result contenu exoName: " + exoNameList);
 
       return false;
     }
