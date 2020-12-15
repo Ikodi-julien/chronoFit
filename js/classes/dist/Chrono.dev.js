@@ -21,9 +21,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * FONCTIONS :
  * - countAhead : Compte de 0 jusqu'à l'info de stopper, +1 à chaque seconde
  * - countDown : Compte à rebours depuis un temps donner jusqu'à 0,
- *    - return "true" à 0
+ *    - return void
  * - stop : Arrête countAhead et countDown,
- *    - return "true"
+ *    - return this.startTime
+ * - timeDislay : méthode interne
+ *    - return string
+ * - playFirstBip : envoi les premiers Bips
+ * - playFinalBip : envoi le Bip final
  */
 var Chrono =
 /*#__PURE__*/
@@ -59,14 +63,16 @@ function () {
       var _this2 = this;
 
       console.log("départ compte à rebours sur = " + this.display);
-      this.display.innerText = this.startTime;
+      var timeString = this.timeDisplay();
+      this.display.innerText = timeString;
 
       var aRepeter = function aRepeter() {
         if (_this2.startTime <= 0) {
           clearInterval(_this2.interval);
         } else {
           _this2.startTime -= 1;
-          _this2.display.innerText = _this2.startTime;
+          timeString = _this2.timeDisplay();
+          _this2.display.innerText = timeString;
 
           if (_this2.startTime > 0 && _this2.startTime < 5) {
             _this2.playFirstBip();
@@ -83,8 +89,19 @@ function () {
     value: function stop() {
       console.log("Arrêt du chrono");
       clearInterval(this.interval);
-      this.display.innerText = this.startTime;
+      var timeString = this.timeDisplay();
+      this.display.innerText = timeString;
       return this.startTime;
+    }
+  }, {
+    key: "timeDisplay",
+    value: function timeDisplay() {
+      var unitMin = Math.floor(this.startTime / 60 % 10);
+      var tenMin = Math.floor(this.startTime / 600);
+      var unitSec = Math.floor(this.startTime % 60 % 10);
+      var tenSec = Math.floor(this.startTime % 60 / 10);
+      var string = tenMin + "" + unitMin + ":" + tenSec + "" + unitSec;
+      return string;
     }
   }, {
     key: "playFirstBip",
