@@ -1,4 +1,5 @@
 /* --- CONSTANTES --- */
+let event = new Event("build");
 
 /**
  * Drag & drop intervals functions
@@ -56,6 +57,9 @@ function trashDropHandler(ev) {
 
   // On envoi la fonction qui refait une timeline à partir de la classe interval
   createTimeline();
+
+  // On envoi un event pour le recalcul du temps total
+  document.dispatchEvent(event);
 }
 
 /**

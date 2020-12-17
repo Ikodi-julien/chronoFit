@@ -27,9 +27,9 @@ ob_start();
   <div class="timer__creation">
     
     <label for="intervalName">Quoi ?</label>
-    <input type="text" name="name" class="timer__creation__intervalName" id="intervalName">
+    <input type="text" name="name" class="timer__creation__intervalName" id="intervalName" value="exo">
     <label for="duration">Durée (s):</label>
-    <input type="number" name="duration" class="timer__creation__duration" id="duration">
+    <input type="number" name="duration" class="timer__creation__duration" id="duration" value="70">
 
     <button id="addInterval" class="--big-button">Ajouter l'interval</button>
     <button id="goToReadTimelineButton" class="--big-button">Valider la Timeline</button>
@@ -55,9 +55,9 @@ ob_start();
 
 -->
 
-<div class="timer">
+<div class="timer timer__read__hidden" id="timerRead">
   <div class="timer__read">
-    <div class="timer__read__close">X</div>
+    <div class="timer__read__close" id="timerReadClose">X</div>
     <div class="timer__read__exoName"id="exoNameDisplay">Le nom de l'exo</div>
     <div class="timer__timeDisplay"  id="timerDisplay">00:00</div>
 

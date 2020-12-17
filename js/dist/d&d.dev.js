@@ -1,10 +1,11 @@
 "use strict";
 
 /* --- CONSTANTES --- */
-
+var event = new Event("build");
 /**
  * Drag & drop intervals functions
  */
+
 function dragstart_handler(ev) {
   // On ajoute l'identifiant de l'élément cible à l'objet de transfert
   ev.dataTransfer.setData("application/my-app", ev.target.id);
@@ -55,7 +56,9 @@ function trashDropHandler(ev) {
 
   toTrash.classList.remove("interval"); // On envoi la fonction qui refait une timeline à partir de la classe interval
 
-  createTimeline();
+  createTimeline(); // On envoi un event pour le recalcul du temps total
+
+  document.dispatchEvent(event);
 }
 /**
  * Function called when à list of interval éléments is modified with drag&drop.

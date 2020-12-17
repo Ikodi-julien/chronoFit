@@ -121,7 +121,8 @@ img {
   display: flex;
   width: 100%;
   justify-content: flex-start;
-  min-height: 500px;
+  min-height: 100vh;
+  background-color: white;
   // border: 1px dashed orange;
 
   &__intervals {
@@ -173,6 +174,17 @@ img {
     align-items: center;
     width: 100%;
 
+    &__hidden {
+      position: fixed;
+      top: -100%;
+      transition: top 300ms;
+    }
+
+    &__show {
+      transition: top 300ms;
+      top: 0;
+    }
+
     &__close {
       align-self: flex-end;
       padding: 10px;
@@ -200,6 +212,10 @@ img {
     justify-content: center;
     align-items: center;
     height: 50px;
+  }
+
+  &__controls {
+    width: 80%;
   }
 }
 
