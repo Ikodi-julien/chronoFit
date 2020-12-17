@@ -4,8 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/<?= $css;?>">
+  <?php
+  if (isset($js2)) {
+    echo "<script src=".$js2."></script>";
+  }
+  if (isset($js2)) {
+    echo "<script src=".$js3."></script>";
+  }
+  ?>
   <script type= "module" src="<?= $js; ?>"></script>
-  <script src="<?= $js2; ?>"></script>
   <title><?= $title; ?></title>
 </head>
 <body>

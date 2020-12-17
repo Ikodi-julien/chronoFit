@@ -7,11 +7,11 @@ ob_start();
 <h1>Accueil</h1>
 
 <div class="landing">
-<a href="./indexTimer.php"><button class="--big-button">Timer</button></a>
-<a href="./indexExercices.php"><button class="--big-button">Exercices</button></a>
-<a href="./indexTrainings.php"><button class="--big-button">Trainings</button></a>
-<a href="./indexProfil.php"><button class="--big-button">Paramètres</button></a>
-<a href="./index.php"><button class="--big-button">Déconnexion</button></a>
+<button class="--big-button"><a href="./indexTimer.php">Timer</a></button>
+<button class="--big-button"><a href="./indexExercices.php">Exercices</a></button>
+<button class="--big-button"><a href="./indexTrainings.php">Trainings</a></button>
+<button class="--big-button"><a href="./indexProfil.php">Paramètres</a></button>
+<button class="--big-button"><a href="./index.php">Déconnexion</a></button>
 </div>
 
 <?php

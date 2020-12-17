@@ -3,39 +3,46 @@ $css = "./style.css";
 $title = "Timer ChronoFit";
 $js = "./js/createTimer.js";
 $js2 = "./js/d&d.js";
+$js3 = "./node_modules/drag-drop-touch/DragDropTouch.js";
 
 ob_start();
 ?>
 <h1>TIMER  <span>Create countdown</span></h1>
 
-<div class="timer__container">
+<div class="timer">
   
-  <div class="timer__container__intervals">
-    <div class="timer__container__intervals__list" id="timerIntervals">
+  <div class="timer__intervals">
+    <div class="timer__intervals__list" id="timerIntervals">
       <div
           id="empty__interval"
           class="drop"
           ondrop="drop_handler(event)"
           ondragover="dragover_handler(event)"
+          ondragleave="dragleave_handler(event)"
         ></div>
     </div>
+
+  </div>
+
+  <div class="timer__creation">
+    
+    <label for="intervalName">Quoi ?</label>
+    <input type="text" name="name" class="timer__creation__intervalName" id="intervalName">
+    <label for="duration">Durée (s):</label>
+    <input type="number" name="duration" class="timer__creation__duration" id="duration">
+
+    <button id="addInterval" class="--big-button">Ajouter l'interval</button>
+    <button id="goToReadTimelineButton" class="--big-button">Valider la Timeline</button>
+
+    <div class="timer__creation__total">Total = <span id="totalTimePreview">00:00</span></div>
+
+
     <div 
       class="timer__trash drop --trash"
       ondrop="trashDropHandler(event)"
       ondragover="trashDragoverHandler(event)"
       >Poubelle
     </div>
-  </div>
-
-  <div class="timer__container__creation">
-    
-    <label for="intervalName">Quoi ?</label>
-    <input type="text" name="name" class="timer__container__creation__intervalName" id="intervalName">
-    <label for="duration">Durée (s):</label>
-    <input type="number" name="duration" class="timer__container__creation__duration" id="duration">
-
-    <button id="addInterval" class="--big-button">Ajouter l'interval</button>
-    <button id="goToReadTimelineButton" class="--big-button">Valider la Timeline</button>
   </div>
 </div>
 
@@ -48,13 +55,13 @@ ob_start();
 
 -->
 
-<div class="timer__container">
-  <div class="timer__container__read">
-    <div class="timer__container__read__close">X</div>
-    <div class="timer__container__read__exoName"id="exoNameDisplay">Le nom de l'exo</div>
-    <div class="timer__container__timeDisplay"  id="timerDisplay">00:00</div>
+<div class="timer">
+  <div class="timer__read">
+    <div class="timer__read__close">X</div>
+    <div class="timer__read__exoName"id="exoNameDisplay">Le nom de l'exo</div>
+    <div class="timer__timeDisplay"  id="timerDisplay">00:00</div>
 
-    <div class="timer__container__controls">
+    <div class="timer__controls">
       <button id="timerStartButton" class="--big-button">START</button>
       <button id="timerPauseButton" class="--big-button">PAUSE</button>
     </div>

@@ -9,13 +9,14 @@
   <title><?= $title; ?></title>
 </head>
 <body>
-<div class="container">
-<header>
-  <img src="img/chronoFit.png" alt="logo chronoFit">
+  <div class="container">
+    <header>
+      <img src="img/chronoFit.png" alt="logo chronoFit">
+    </header>
 
-<?php 
-// require('./common/nav.php')
-echo $content;?>
+    <?php 
+    echo $content;?>
+
   </div>
 </body>
 </html>

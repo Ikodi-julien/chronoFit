@@ -8,36 +8,24 @@
   --color-button: #2ba1ff;
   --color-blue-chronoFit: rgb(43, 161, 255);
   --color-border: grey;
+  --color-border-container: red;
   --color-interval-normal: rgb(194, 227, 255);
   --color-font-dark: rgb(56, 56, 56);
-  --color-font-light: rgb(236, 236, 236);
+  /* A remettre en plus clair qd ok */
+  --color-font-light: rgb(199, 199, 199);
   --border-radius: 3px;
 }
 
-/* --- COMMON --- */
-html {
+/* --- GENERAL --- */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "nobileregular";
 }
 
-a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  color: var(--color-font-dark);
-  text-decoration: none;
-}
-
-img {
-  width: 100px;
-}
-
 header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
 }
 header ul {
   display: flex;
@@ -50,6 +38,8 @@ header ul li {
   margin: 5px;
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
+  font-weight: 700;
+  background-color: var(--color-blue-chronoFit);
 }
 
 h1 {
@@ -60,116 +50,121 @@ h1 span {
   font-size: 0.5em;
 }
 
+a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--color-font-light);
+  text-decoration: none;
+}
+
+img {
+  width: 80px;
+}
+
 .container {
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  min-height: 100vh;
   align-items: center;
   color: var(--color-font-dark);
-  border: 1px solid var(--color-border);
-}
-
-.content {
-  width: 80%;
-  min-width: 360px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
   padding: 8px;
-  margin-top: 20px;
+  background-color: white;
 }
-.content h1,
-.content fieldset {
+.container h1 {
   width: 100%;
-  margin: 10px 0;
+  margin: 5px 0;
+  text-align: center;
 }
 
 /* --- LOGIN ---*/
-form {
+.container__login__form {
   width: 80%;
   display: flex;
   flex-direction: column;
   align-items: start;
   margin: 10px;
 }
-form input {
-  margin: 10px;
+.container__login__form .container__login__form__item {
+  margin: 20px 10px;
+}
+.container__login__form .container__login__form__row {
+  display: flex;
 }
 
 /* --- LANDING --- */
 .landing {
   width: 80%;
-  min-width: 360px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 8px;
-  margin-top: 20px;
-}
-.landing a {
-  margin: 10px;
+  margin-top: 15px;
 }
 
 /* --- EXOS --- */
 /* --- TIMER --- */
-.timer__container {
+.timer {
   display: flex;
-  width: 375px;
-  min-height: 600px;
-  margin-top: 15px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
+  width: 100%;
+  justify-content: flex-start;
+  min-height: 500px;
 }
-.timer__container__intervals {
+.timer__intervals {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 50%;
-  height: 100%;
   padding: 1%;
-  border: 1px solid blue;
 }
-.timer__container__intervals__list {
+.timer__intervals__list {
   display: flex;
   flex-direction: column;
-  border: 1px solid #1c8b00;
 }
-.timer__container__creation {
+.timer__creation {
+  position: fixed;
   width: 50%;
+  top: 140px;
+  right: 0;
   padding: 1% 1% 1% 2%;
-  height: 400px;
+  height: 470px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-evenly;
-  border: 1px solid yellow;
+  justify-content: space-between;
+  background-color: white;
 }
-.timer__container__creation__duration {
-  width: 97%;
-  font-size: 30px;
-}
-.timer__container__creation__intervalName {
+.timer__creation__intervalName {
   font-size: 18px;
-  width: 97%;
+  width: 90%;
 }
-.timer__container__read {
+.timer__creation__duration {
+  width: 90%;
+  font-size: 25px;
+}
+.timer__creation__total {
+  font-size: 1.5rem;
+}
+.timer__read {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
 }
-.timer__container__read__close {
+.timer__read__close {
   align-self: flex-end;
   padding: 10px;
   border: 1px solid black;
   border-radius: var(--border-radius);
   margin: 10px;
 }
-.timer__container__read__exoName {
+.timer__read__exoName {
   width: 100%;
   font-size: 50px;
   text-align: center;
 }
-.timer__container__timeDisplay {
+.timer__timeDisplay {
   width: 100%;
   font-size: 100px;
   text-align: center;
@@ -192,33 +187,32 @@ form input {
 }
 
 .drop {
-  min-height: 10px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
-  margin: 2px;
-  background-color: var(--color-blue-chronoFit);
+  min-height: 15px;
+  transition: min-height 200ms;
 }
 
-/* --- MODIFIER --- */
+.--isDraggedOver {
+  min-height: 50px;
+  opacity: 0.7;
+  transition: min-height 200ms;
+}
+
 .--trash {
   background-color: var(--color-border);
   color: var(--color-font-light);
   font-weight: 700;
+  width: 90%;
 }
 
+/* --- MODIFIER --- */
 .--big-button {
   background-color: var(--color-button);
-  width: 97%;
-  font-size: 18px;
+  width: 90%;
+  min-height: 50px;
+  font-size: 16px;
   font-weight: bold;
   color: var(--color-font-light);
-  padding: 20px 0;
-  margin: 20px 0;
+  margin: 15px 0;
   border-radius: var(--border-radius);
   cursor: pointer;
-}
-.--big-button a {
-  color: var(--color-font-light);
-  display: block;
-  width: 100%;
 }
