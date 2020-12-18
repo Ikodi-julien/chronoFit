@@ -23,6 +23,7 @@ const goToReadTimelineButton = document.getElementById(
 );
 const exoNameDisplay = document.getElementById("exoNameDisplay");
 const timerReadClose = document.getElementById("timerReadClose");
+const readTotalTime = document.getElementById("readTotalTime");
 
 let intervalsCollection = null;
 let durationList = [];
@@ -32,96 +33,8 @@ let isListening = false;
 let isReading = false;
 let firstCountdown = true;
 let timerPromise = 0;
-
-document.addEventListener("DOMContentLoaded", () => {
-  /**
-   *
-   *
-   *
-   * --- LISTENER CREATE TIMER ---
-   *
-   *
-   *
-   **/
-  // Ajoute une intervalle à la Timeline
-  addIntervalButton.addEventListener("click", () => {
-    // On récupère le nom et la durée de l'interval
-    let intervalName = intervalNameInput.value;
-    let intervalDuration = durationInput.value;
-
-    // On créé un objet Interval avec id
-    let interval = new Interval(
-      "interval" + intervalsCompteur,
-      intervalName,
-      intervalDuration
-    );
-
-    if (interval.duration) {
-      // On ajoute l'interval dans le container d'intervals
-      intervalsContainer.appendChild(interval.createIntervalHtml());
-
-      // On créé une div droppable vide à la fin
-      let dropableDiv = document.createElement("div");
-      dropableDiv.classList.add("drop");
-      dropableDiv.setAttribute("id", "empty__interval" + intervalsCompteur);
-      dropableDiv.setAttribute("ondrop", "drop_handler(event)");
-      dropableDiv.setAttribute("ondragover", "dragover_handler(event)");
-      dropableDiv.setAttribute("ondragleave", "dragleave_handler(event)");
-      intervalsContainer.appendChild(dropableDiv);
-
-      // on oubli pas d'incrémenter le compteur
-      intervalsCompteur++;
-
-      // On rafraichit les listes de durées et noms
-      refreshDurationsAndNames();
-
-      // On envoi un event pour le recalcul du temps total
-      document.dispatchEvent(event);
-    }
-  });
-
-  // On affiche le temps total à chaque nouvel event "build"
-  document.addEventListener("build", () => {
-    refreshDurationsAndNames();
-    refreshTotalTime();
-  });
-
-  /**
-   *
-   *
-   *
-   *  --- LISTENER READ COUNTDOWN ---
-   *
-   *
-   *
-   **/
-
-  // Créé la liste des éléments à lire et affiche la vue countdown
-  goToReadTimelineButton.addEventListener("click", () => {
-    // Toggle une classe qui fait apparaitre la vue du countdown
-    timerReadPage.classList.add("timer__read__show");
-    refreshDurationsAndNames();
-  });
-
-  // EventListener pour revenir à la page de création (le "X")
-  timerReadClose.addEventListener("click", () => {
-    timerReadPage.classList.remove("timer__read__show");
-  });
-
-  // Lance le countdown
-  startCountDownButton.addEventListener("click", () => {
-    // On ajoute 5 secondes de prépa "READY ?" au début si c'est le premier démarrage
-    if (firstCountdown) {
-      durationList.unshift(5);
-      exoNameList.unshift("READY ?");
-      firstCountdown = false;
-    }
-    console.log("Start, contenu durées : " + durationList);
-    console.log("Start, contenu exoName : " + exoNameList);
-    // On envoi la fonction asynchrone de CAR
-    awaitCountDown();
-  });
-});
+let timerTotalDuration = 0;
+let countdownTotal;
 
 /**
  *
@@ -211,6 +124,23 @@ const newTotalTimeString = (totalDuration) => {
  *
  **/
 
+// Fonction appelée en cas de pause du countdown
+const pauseCountdown = (chrono) => {
+  if (isReading) {
+    // On arrête le chrono
+    let stopTime = chrono.stop();
+    isReading = false;
+    console.log("Pause, temps récup : " + stopTime);
+
+    // On ajoute le temps restant et le nom au début de la liste
+    durationList.unshift(stopTime);
+    exoNameList.unshift(exoNameDisplay.innerText);
+
+    // On dit que ça ne lit plus
+    return (isReading = false);
+  }
+};
+
 /**
  * Promise awaited by awaitCountdown(),
  * Click pause button => resolve(false)
@@ -237,29 +167,26 @@ const promiseCountDown = () => {
       }, duration * 1000 + 1000);
     }
 
-    // Fonction appelée en cas de pause du countdown
-    const pauseCountdown = () => {
-      if (isReading) {
+    // Création listener pour arrêt du chrono
+    if (!isListening) {
+      stopChronoButton.addEventListener("click", () => {
         // On arrête le chrono
-        let stopTime = chronoId[0].stop();
-        isReading = false;
-        console.log("Pause, temps récup : " + stopTime);
+        pauseCountdown(chronoId[0]);
 
-        // On ajoute le temps restant et le nom au début de la liste
-        durationList.unshift(stopTime);
-        exoNameList.unshift(exoNameDisplay.innerText);
+        // Prévoir l'arrêt du countdown total et on vide la variable
+        if (countdownTotal) {
+          countdownTotal.stop();
+          countdownTotal = false;
+        }
 
         // On clear la Promise
         clearTimeout(timerPromise);
         console.log("DurationList après unshift() : " + durationList);
         resolve(false);
-      }
-    };
 
-    // Création listener pour arrêt du chrono
-    if (!isListening) {
-      stopChronoButton.addEventListener("click", pauseCountdown);
-      isListening = true;
+        // On évite de recréer un listener
+        isListening = true;
+      });
     }
   });
 };
@@ -293,7 +220,121 @@ const awaitCountDown = async function () {
       return false;
     }
   }
-
   // On pourra remettre 5s au début si relance d'une timeline
   firstCountdown = true;
 };
+
+// Listeners
+document.addEventListener("DOMContentLoaded", () => {
+  /**
+   *
+   *
+   *
+   * --- LISTENER CREATE TIMER ---
+   *
+   *
+   *
+   **/
+  // Ajoute une intervalle à la Timeline
+
+  addIntervalButton.addEventListener("click", () => {
+    // On récupère le nom et la durée de l'interval
+    let intervalName = intervalNameInput.value;
+    let intervalDuration = durationInput.value;
+
+    // On créé un objet Interval avec id
+    let interval = new Interval(
+      "interval" + intervalsCompteur,
+      intervalName,
+      intervalDuration
+    );
+
+    if (interval.duration) {
+      // On ajoute l'interval dans le container d'intervals
+      intervalsContainer.appendChild(interval.createIntervalHtml());
+
+      // On créé une div droppable vide à la fin
+      let dropableDiv = document.createElement("div");
+      dropableDiv.classList.add("drop");
+      dropableDiv.setAttribute("id", "empty__interval" + intervalsCompteur);
+      dropableDiv.setAttribute("ondrop", "drop_handler(event)");
+      dropableDiv.setAttribute("ondragover", "dragover_handler(event)");
+      dropableDiv.setAttribute("ondragleave", "dragleave_handler(event)");
+      intervalsContainer.appendChild(dropableDiv);
+
+      // on oubli pas d'incrémenter le compteur
+      intervalsCompteur++;
+
+      // On rafraichit les listes de durées et noms
+      refreshDurationsAndNames();
+
+      // On envoi un event pour le recalcul du temps total
+      document.dispatchEvent(event);
+    }
+  });
+
+  // On affiche le temps total à chaque nouvel event "build"
+  document.addEventListener("build", () => {
+    refreshDurationsAndNames();
+    refreshTotalTime();
+  });
+
+  /**
+   *
+   *
+   *
+   *  --- LISTENER READ COUNTDOWN ---
+   *
+   *
+   *
+   **/
+
+  // Créé la liste des éléments à lire et affiche la vue countdown
+  goToReadTimelineButton.addEventListener("click", () => {
+    // Toggle une classe qui fait apparaitre la vue du countdown
+    timerReadPage.classList.add("timer__read__show");
+    refreshDurationsAndNames();
+  });
+
+  // Lance le countdown
+  startCountDownButton.addEventListener("click", () => {
+    // Déjà on ne lit pas si déjà en train de lire
+    if (!isReading) {
+      // On ajoute 5 secondes de prépa "READY ?" au début si c'est le premier démarrage
+      if (firstCountdown) {
+        durationList.unshift(5);
+        exoNameList.unshift("READY ?");
+        firstCountdown = false;
+      }
+
+      console.log("Start, contenu durées : " + durationList);
+      console.log("Start, contenu exoName : " + exoNameList);
+      // On envoi la fonction asynchrone de CAR
+      awaitCountDown();
+
+      // Prévoir de lancer le countDown total
+      timerTotalDuration = sumIntervalsTimes();
+      if (firstCountdown) timerTotalDuration += 5;
+      countdownTotal = new Chrono(timerTotalDuration, readTotalTime);
+      countdownTotal.countDown();
+    }
+  });
+
+  // EventListener pour revenir à la page de création (le "X")
+  timerReadClose.addEventListener("click", () => {
+    // On fait un pseudo event click sur pauseCountDownBtn
+    stopChronoButton.dispatchEvent(new Event("click"));
+
+    // On quitte la lecture, donc on vide les listes
+    durationList = [];
+    exoNameList = [];
+
+    console.log("Quit : " + durationList);
+
+    // On remet les 5 sec au début
+    firstCountdown = true;
+
+    // On recache la page lecture
+    timerReadPage.classList.remove("timer__read__show");
+  });
+});

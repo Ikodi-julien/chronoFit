@@ -23,7 +23,7 @@ function timer() {
 
 function training() {
 
-  header('Location: indexTrainings.php');
+  header('Location: 404_redirect.html');
 
 }
 
@@ -34,7 +34,7 @@ function exercice() {
 
 function profil() {
 
-  header('Location: indexProfil.php');
+  header('Location: 404_redirect.html');
 
 }
 
