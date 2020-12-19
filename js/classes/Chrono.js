@@ -20,7 +20,7 @@ class Chrono {
   constructor(startTime, display) {
     this.startTime = startTime;
     this.display = display;
-    this.interval = null;
+    this.interval = 0;
     this.nextCountDown = false;
     console.log("nouvel objet Chrono créé");
   }
@@ -37,30 +37,32 @@ class Chrono {
   }
 
   countDown() {
-    console.log("départ compte à rebours sur = " + this.display);
+    console.log("départ compte à rebours");
     let timeString = this.timeDisplay();
-    this.display.innerText = timeString;
+    // this.display.innerText = timeString;
 
     const aRepeter = () => {
       if (this.startTime <= 0) {
         clearInterval(this.interval);
       } else {
-        this.startTime -= 1;
+        this.startTime--;
         timeString = this.timeDisplay();
         this.display.innerText = timeString;
 
-        if (this.startTime > 0 && this.startTime < 5) {
+        if (this.startTime > 0 && this.startTime < 3) {
           this.playFirstBip();
         }
         if (this.startTime == 0) this.playFinalBip();
       }
     };
+    aRepeter();
     this.interval = setInterval(aRepeter, 1000);
   }
 
   stop() {
     console.log("Arrêt du chrono");
     clearInterval(this.interval);
+    this.interval = 0;
     let timeString = this.timeDisplay();
     this.display.innerText = timeString;
     return this.startTime;

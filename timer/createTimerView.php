@@ -65,7 +65,7 @@ ob_start();
       <button id="timerStartButton" class="--big-button">START</button>
       <button id="timerPauseButton" class="--big-button">PAUSE</button>
     </div>
-    <div class="timer__read__totalTime" id="readTotalTime"></div>
+    <div class="timer__read__totalTime" id="totalTimeDisplay"></div>
   </div>
 </div>
 

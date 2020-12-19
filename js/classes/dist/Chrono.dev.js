@@ -37,7 +37,7 @@ function () {
 
     this.startTime = startTime;
     this.display = display;
-    this.interval = null;
+    this.interval = 0;
     this.nextCountDown = false;
     console.log("nouvel objet Chrono créé");
   }
@@ -62,19 +62,18 @@ function () {
     value: function countDown() {
       var _this2 = this;
 
-      console.log("départ compte à rebours sur = " + this.display);
-      var timeString = this.timeDisplay();
-      this.display.innerText = timeString;
+      console.log("départ compte à rebours");
+      var timeString = this.timeDisplay(); // this.display.innerText = timeString;
 
       var aRepeter = function aRepeter() {
         if (_this2.startTime <= 0) {
           clearInterval(_this2.interval);
         } else {
-          _this2.startTime -= 1;
+          _this2.startTime--;
           timeString = _this2.timeDisplay();
           _this2.display.innerText = timeString;
 
-          if (_this2.startTime > 0 && _this2.startTime < 5) {
+          if (_this2.startTime > 0 && _this2.startTime < 3) {
             _this2.playFirstBip();
           }
 
@@ -82,6 +81,7 @@ function () {
         }
       };
 
+      aRepeter();
       this.interval = setInterval(aRepeter, 1000);
     }
   }, {
@@ -89,6 +89,7 @@ function () {
     value: function stop() {
       console.log("Arrêt du chrono");
       clearInterval(this.interval);
+      this.interval = 0;
       var timeString = this.timeDisplay();
       this.display.innerText = timeString;
       return this.startTime;
