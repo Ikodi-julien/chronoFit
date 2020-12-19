@@ -170,9 +170,18 @@ img {
   margin: 10px;
 }
 .timer__read__exoName {
-  width: 100%;
-  font-size: 50px;
+  width: 90%;
+  font-size: 40px;
+  height: 120px;
   text-align: center;
+  box-shadow: 0 0 10px 3px rgba(30, 30, 30, 0.2);
+}
+.timer__read__totalTime span {
+  width: 90%;
+  font-size: 30px;
+  padding: 0 15px;
+  margin: 0 20px;
+  box-shadow: 0 0 10px 3px rgba(30, 30, 30, 0.2);
 }
 .timer__timeDisplay {
   width: 100%;
@@ -186,7 +195,14 @@ img {
   height: 50px;
 }
 .timer__controls {
-  width: 80%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.timer__controls__row {
+  width: 90%;
+  display: flex;
 }
 
 .interval {
@@ -225,7 +241,7 @@ img {
   font-size: 16px;
   font-weight: bold;
   color: var(--color-font-light);
-  margin: 15px 0;
+  margin: 10px;
   border-radius: var(--border-radius);
   cursor: pointer;
 }
