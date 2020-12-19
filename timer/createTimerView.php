@@ -72,6 +72,8 @@ ob_start();
       </div>
     </div>
     <div class="timer__read__totalTime">Temps restant <span id="totalTimeDisplay"></span></div>
+    <div class="timer__read__nextExoName"id="nextExoNameDisplay">Le nom du next exo</div>
+
   </div>
 </div>
 

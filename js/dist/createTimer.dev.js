@@ -22,6 +22,7 @@ var stopChronoButton = document.querySelector("#timerPauseButton");
 var countDownDisplay = document.getElementById("timerDisplay");
 var goToReadTimelineButton = document.getElementById("goToReadTimelineButton");
 var exoNameDisplay = document.getElementById("exoNameDisplay");
+var nextExoNameDisplay = document.getElementById("nextExoNameDisplay");
 var timerReadClose = document.getElementById("timerReadClose");
 var totalTimeDisplay = document.getElementById("totalTimeDisplay");
 var previousCountdownBtn = document.getElementById("previousCountdown");
@@ -150,9 +151,10 @@ var goToReadTimeline = function goToReadTimeline() {
   timerReadPage.classList.add("timer__read__show"); // Rafraichit les listes pour etre bien
 
   durationList = refreshList(durationList, 1);
-  exoNameList = refreshList(exoNameList, 0); // Affiche le temps total
+  exoNameList = refreshList(exoNameList, 0); // Affiche le temps total et l'exo suivant
 
   totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList));
+  nextExoNameDisplay.innerText = exoNameList[0];
 };
 /**
  *
@@ -202,10 +204,13 @@ var stopAllCountdowns = function stopAllCountdowns() {
     isReading = pauseCountdown(chronoId[0]);
     chronoId = []; // Arrêt du countdown total et on vide la variable
 
-    countdownTotal[0].stop();
-    countdownTotal = [];
-    timerTotalDuration = 0; // Il y un eventListener dans la promise, pour mémoire
+    if (countdownTotal.length) {
+      countdownTotal[0].stop();
+      countdownTotal = [];
+      timerTotalDuration = 0;
+    } // Il y un eventListener dans la promise, pour mémoire
     // On évite de recréer un listener
+
 
     isStopped = true;
   }
@@ -268,6 +273,13 @@ var previousCountdown = function previousCountdown() {
   totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList)); // On affiche nom et durée
 
   exoNameDisplay.innerText = exoNameList[0];
+
+  if (exoNameList[1]) {
+    nextExoNameDisplay.innerText = exoNameList[1];
+  } else {
+    nextExoNameDisplay.innerText = "C'est la fin !";
+  }
+
   countDownDisplay.innerText = durationList[0]; // On permet 5s au démarrage
 
   isFirstCountdown = true;
@@ -293,6 +305,13 @@ var nextCountdown = function nextCountdown() {
     totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList)); // On affiche nom et durée
 
     exoNameDisplay.innerText = exoNameList[0];
+
+    if (exoNameList[1]) {
+      nextExoNameDisplay.innerText = exoNameList[1];
+    } else {
+      nextExoNameDisplay.innerText = "C'est la fin !";
+    }
+
     countDownDisplay.innerText = durationList[0]; // On permet 5s au démarrage
 
     isFirstCountdown = true;
@@ -350,23 +369,24 @@ var awaitCountDown = function awaitCountDown() {
 
         case 1:
           if (!(durationList.length && again)) {
-            _context.next = 14;
+            _context.next = 15;
             break;
           }
 
           console.log("Liste durées : " + durationList);
-          console.log("Liste exoName : " + exoNameList); //
+          console.log("Liste exoName : " + exoNameList); // On affiche les exoNames
 
-          exoNameDisplay.innerText = exoNameList.shift(); // La Promise est résolue si fin du countdown ou pause
+          exoNameDisplay.innerText = exoNameList.shift();
+          nextExoNameDisplay.innerText = exoNameList[0]; // La Promise est résolue si fin du countdown ou pause
 
-          _context.next = 7;
+          _context.next = 8;
           return regeneratorRuntime.awrap(promiseCountDown());
 
-        case 7:
+        case 8:
           resolve = _context.sent;
 
           if (resolve) {
-            _context.next = 12;
+            _context.next = 13;
             break;
           }
 
@@ -374,15 +394,16 @@ var awaitCountDown = function awaitCountDown() {
           console.log("resolve = false, listes : " + durationList + " " + exoNameList);
           return _context.abrupt("return", false);
 
-        case 12:
+        case 13:
           _context.next = 1;
           break;
 
-        case 14:
-          // On pourra remettre 5s au début si relance d'une timeline
+        case 15:
+          nextExoNameDisplay.innerText = "Fini !"; // On pourra remettre 5s au début si relance d'une timeline
+
           isFirstCountdown = true;
 
-        case 15:
+        case 17:
         case "end":
           return _context.stop();
       }

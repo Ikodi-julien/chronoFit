@@ -22,6 +22,7 @@ const goToReadTimelineButton = document.getElementById(
   "goToReadTimelineButton"
 );
 const exoNameDisplay = document.getElementById("exoNameDisplay");
+const nextExoNameDisplay = document.getElementById("nextExoNameDisplay");
 const timerReadClose = document.getElementById("timerReadClose");
 const totalTimeDisplay = document.getElementById("totalTimeDisplay");
 const previousCountdownBtn = document.getElementById("previousCountdown");
@@ -163,8 +164,9 @@ const goToReadTimeline = () => {
   durationList = refreshList(durationList, 1);
   exoNameList = refreshList(exoNameList, 0);
 
-  // Affiche le temps total
+  // Affiche le temps total et l'exo suivant
   totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList));
+  nextExoNameDisplay.innerText = exoNameList[0];
 };
 
 /**
@@ -226,10 +228,11 @@ const stopAllCountdowns = () => {
     chronoId = [];
 
     // Arrêt du countdown total et on vide la variable
-
-    countdownTotal[0].stop();
-    countdownTotal = [];
-    timerTotalDuration = 0;
+    if (countdownTotal.length) {
+      countdownTotal[0].stop();
+      countdownTotal = [];
+      timerTotalDuration = 0;
+    }
 
     // Il y un eventListener dans la promise, pour mémoire
 
@@ -306,6 +309,11 @@ const previousCountdown = () => {
 
   // On affiche nom et durée
   exoNameDisplay.innerText = exoNameList[0];
+  if (exoNameList[1]) {
+    nextExoNameDisplay.innerText = exoNameList[1];
+  } else {
+    nextExoNameDisplay.innerText = "C'est la fin !";
+  }
   countDownDisplay.innerText = durationList[0];
 
   // On permet 5s au démarrage
@@ -335,6 +343,11 @@ const nextCountdown = () => {
 
     // On affiche nom et durée
     exoNameDisplay.innerText = exoNameList[0];
+    if (exoNameList[1]) {
+      nextExoNameDisplay.innerText = exoNameList[1];
+    } else {
+      nextExoNameDisplay.innerText = "C'est la fin !";
+    }
     countDownDisplay.innerText = durationList[0];
 
     // On permet 5s au démarrage
@@ -391,8 +404,9 @@ const awaitCountDown = async function () {
     console.log("Liste durées : " + durationList);
     console.log("Liste exoName : " + exoNameList);
 
-    //
+    // On affiche les exoNames
     exoNameDisplay.innerText = exoNameList.shift();
+    nextExoNameDisplay.innerText = exoNameList[0];
 
     // La Promise est résolue si fin du countdown ou pause
     let resolve = await promiseCountDown();
@@ -406,6 +420,9 @@ const awaitCountDown = async function () {
       return false;
     }
   }
+
+  nextExoNameDisplay.innerText = "Fini !";
+
   // On pourra remettre 5s au début si relance d'une timeline
   isFirstCountdown = true;
 };
