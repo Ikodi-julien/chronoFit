@@ -27,9 +27,9 @@ ob_start();
   <div class="timer__creation">
     
     <label for="intervalName">Quoi ?</label>
-    <input type="text" name="name" class="timer__creation__intervalName" id="intervalName" value="exo">
+    <input type="text" name="name" class="timer__creation__intervalName" id="intervalName" >
     <label for="duration">Durée (s):</label>
-    <input type="number" name="duration" class="timer__creation__duration" id="duration" value="10">
+    <input type="number" name="duration" class="timer__creation__duration" id="duration">
 
     <button id="addInterval" class="--big-button">Ajouter l'interval</button>
     <button id="goToReadTimelineButton" class="--big-button">Valider la Timeline</button>
@@ -58,7 +58,7 @@ ob_start();
 <div class="timer timer__read__hidden" id="timerRead">
   <div class="timer__read">
     <div class="timer__read__close" id="timerReadClose">X</div>
-    <div class="timer__read__exoName"id="exoNameDisplay">Le nom de l'exo</div>
+    <div class="timer__read__exoName"id="exoNameDisplay"></div>
     <div class="timer__timeDisplay"  id="timerDisplay">00:00</div>
 
     <div class="timer__controls">
@@ -71,8 +71,10 @@ ob_start();
         <button id="nextCountdown" class="--big-button">>></button>
       </div>
     </div>
-    <div class="timer__read__totalTime">Temps restant <span id="totalTimeDisplay"></span></div>
-    <div class="timer__read__nextExoName"id="nextExoNameDisplay">Le nom du next exo</div>
+    <div class="timer__read__row">
+      <div class="timer__read__totalTime">Total restant <span id="totalTimeDisplay"></span></div>
+      <div class="timer__read__nextExoName">Exo suivant : <span id="nextExoNameDisplay"></span></div>
+    </div>
 
   </div>
 </div>

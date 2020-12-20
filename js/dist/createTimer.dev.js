@@ -147,14 +147,17 @@ var newTotalTimeString = function newTotalTimeString(duration) {
 
 var goToReadTimeline = function goToReadTimeline() {
   // Toggle une classe qui fait apparaitre la vue du countdown
-  console.log("Timeline validée");
-  timerReadPage.classList.add("timer__read__show"); // Rafraichit les listes pour etre bien
-
+  // Si on a au moins une durée
   durationList = refreshList(durationList, 1);
-  exoNameList = refreshList(exoNameList, 0); // Affiche le temps total et l'exo suivant
+  exoNameList = refreshList(exoNameList, 0);
 
-  totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList));
-  nextExoNameDisplay.innerText = exoNameList[0];
+  if (durationList.length) {
+    console.log("Timeline validée");
+    timerReadPage.classList.add("timer__read__show"); // Affiche le temps total et l'exo suivant
+
+    totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList));
+    nextExoNameDisplay.innerText = exoNameList[0];
+  }
 };
 /**
  *
@@ -166,6 +169,22 @@ var goToReadTimeline = function goToReadTimeline() {
  *
  **/
 
+/**
+ * @param {void} - Displays current and next exoName as well as interval duration
+ */
+
+
+var displayCurrentAndNextNameAndIntervalTime = function displayCurrentAndNextNameAndIntervalTime(durationList, exoNameList) {
+  exoNameDisplay.innerText = exoNameList[0];
+
+  if (exoNameList[1]) {
+    nextExoNameDisplay.innerText = exoNameList[1];
+  } else {
+    nextExoNameDisplay.innerText = "C'est la fin !";
+  }
+
+  countDownDisplay.innerText = durationList[0];
+};
 /**
  * Var : durationList, exoNameList, countdownTotal[], isReading, isFirstCountDown
  * Function : returnSum(), Chrono.countdown(), awaitCountdown()
@@ -228,7 +247,8 @@ var quitReadPage = function quitReadPage() {
   exoNameList = []; // On affiche des 00:00
 
   countDownDisplay.innerText = "00:00";
-  totalTimeDisplay.innerText = "00:00"; // On permet les 5 sec au début
+  totalTimeDisplay.innerText = "00:00";
+  exoNameDisplay.innerText = ""; // On permet les 5 sec au début
 
   isFirstCountdown = true; // On escamote la page lecture
 
@@ -272,15 +292,7 @@ var previousCountdown = function previousCountdown() {
 
   totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList)); // On affiche nom et durée
 
-  exoNameDisplay.innerText = exoNameList[0];
-
-  if (exoNameList[1]) {
-    nextExoNameDisplay.innerText = exoNameList[1];
-  } else {
-    nextExoNameDisplay.innerText = "C'est la fin !";
-  }
-
-  countDownDisplay.innerText = durationList[0]; // On permet 5s au démarrage
+  displayCurrentAndNextNameAndIntervalTime(durationList, exoNameList); // On permet 5s au démarrage
 
   isFirstCountdown = true;
 };
@@ -304,15 +316,7 @@ var nextCountdown = function nextCountdown() {
 
     totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList)); // On affiche nom et durée
 
-    exoNameDisplay.innerText = exoNameList[0];
-
-    if (exoNameList[1]) {
-      nextExoNameDisplay.innerText = exoNameList[1];
-    } else {
-      nextExoNameDisplay.innerText = "C'est la fin !";
-    }
-
-    countDownDisplay.innerText = durationList[0]; // On permet 5s au démarrage
+    displayCurrentAndNextNameAndIntervalTime(durationList, exoNameList); // On permet 5s au démarrage
 
     isFirstCountdown = true;
   }
@@ -329,7 +333,9 @@ var promiseCountDown = function promiseCountDown() {
     // Création d'un chrono chargé de cet interval
     var duration = durationList.shift();
     var chrono = new _Chrono.Chrono(duration, countDownDisplay);
-    chronoId.unshift(chrono); // Démarrage du CAR
+    chronoId.unshift(chrono); // On oublie pas d'enlever le nom de l'exo aussi dans sa liste
+
+    exoNameList.shift(); // Démarrage du CAR
 
     chronoId[0].countDown();
     isReading = true; // Timeout de la Promise
@@ -369,24 +375,25 @@ var awaitCountDown = function awaitCountDown() {
 
         case 1:
           if (!(durationList.length && again)) {
-            _context.next = 15;
+            _context.next = 14;
             break;
           }
 
           console.log("Liste durées : " + durationList);
           console.log("Liste exoName : " + exoNameList); // On affiche les exoNames
+          // durationList = refreshList(durationList, 1);
+          // exoNameList = refreshList(exoNameList, 0);
 
-          exoNameDisplay.innerText = exoNameList.shift();
-          nextExoNameDisplay.innerText = exoNameList[0]; // La Promise est résolue si fin du countdown ou pause
+          displayCurrentAndNextNameAndIntervalTime(durationList, exoNameList); // La Promise est résolue si fin du countdown ou pause
 
-          _context.next = 8;
+          _context.next = 7;
           return regeneratorRuntime.awrap(promiseCountDown());
 
-        case 8:
+        case 7:
           resolve = _context.sent;
 
           if (resolve) {
-            _context.next = 13;
+            _context.next = 12;
             break;
           }
 
@@ -394,16 +401,16 @@ var awaitCountDown = function awaitCountDown() {
           console.log("resolve = false, listes : " + durationList + " " + exoNameList);
           return _context.abrupt("return", false);
 
-        case 13:
+        case 12:
           _context.next = 1;
           break;
 
-        case 15:
+        case 14:
           nextExoNameDisplay.innerText = "Fini !"; // On pourra remettre 5s au début si relance d'une timeline
 
           isFirstCountdown = true;
 
-        case 17:
+        case 16:
         case "end":
           return _context.stop();
       }

@@ -16,14 +16,15 @@
   /* A remettre en plus clair qd ok */
   --color-font-light: rgb(199, 199, 199);
   --border-radius: 3px;
+  --box-shadow: 0 0 10px 3px rgba(30, 30, 30, 0.1);
 }
 
 /* --- GENERAL --- */
 * {
+  font-family: "nobileregular";
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "nobileregular";
 }
 
 header {
@@ -74,8 +75,18 @@ img {
   align-items: center;
   color: var(--color-font-dark);
   // border: 1px dashed red;
-  padding: 8px;
+  padding: 5px;
   background-color: white;
+  margin: auto;
+  box-shadow: var(--box-shadow);
+
+  @media screen and (min-width: 700px) {
+    width: 80%;
+  }
+
+  @media screen and (min-width: 1400px) {
+    width: 60%;
+  }
 
   & h1 {
     width: 100%;
@@ -93,6 +104,7 @@ img {
   flex-direction: column;
   align-items: start;
   margin: 10px;
+  box-shadow: var(--box-shadow);
 
   & .container__login__form__item {
     margin: 20px 10px;
@@ -112,6 +124,7 @@ img {
   align-items: center;
   padding: 8px;
   margin-top: 15px;
+  box-shadow: var(--box-shadow);
 }
 
 /* --- EXOS --- */
@@ -151,7 +164,17 @@ img {
     align-items: flex-start;
     justify-content: space-between;
     background-color: white;
+    box-shadow: var(--box-shadow);
     // border: 1px dashed yellow;
+
+    @media screen and (min-width: 700px) {
+      right: 15%;
+      width: 35%;
+    }
+    @media screen and (min-width: 1400px) {
+      right: 25%;
+      width: 25%;
+    }
 
     &__intervalName {
       font-size: 18px;
@@ -173,6 +196,7 @@ img {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    box-shadow: var(--box-shadow);
 
     &__hidden {
       position: fixed;
@@ -196,23 +220,63 @@ img {
     &__exoName {
       width: 90%;
       font-size: 40px;
+      @media (min-width: 700px) {
+        font-size: 60px;
+      }
+      @media (min-width: 1400px) {
+        font-size: 80px;
+      }
+      @media (min-width: 1800px) {
+        font-size: 100px;
+      }
       height: 120px;
       text-align: center;
-      box-shadow: 0 0 10px 3px rgba(30, 30, 30, 0.2);
+      box-shadow: var(--box-shadow);
     }
 
-    &__totalTime span {
-      width: 90%;
-      font-size: 30px;
-      padding: 0 15px;
-      margin: 0 20px;
-      box-shadow: 0 0 10px 3px rgba(30, 30, 30, 0.2);
+    &__row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &__nextExoName {
+      margin: 15px;
+      padding: 5px;
+      text-align: center;
+      box-shadow: var(--box-shadow);
+
+      & span {
+        font-size: 30px;
+        padding: 0 15px;
+      }
+    }
+
+    &__totalTime {
+      margin: 15px;
+      padding: 5px;
+      text-align: center;
+      box-shadow: var(--box-shadow);
+
+      & span {
+        font-size: 30px;
+        padding: 0 15px;
+      }
     }
   }
 
   &__timeDisplay {
     width: 100%;
     font-size: 100px;
+    @media (min-width: 700px) {
+      font-size: 150px;
+    }
+    @media (min-width: 1400px) {
+      font-size: 200px;
+    }
+    @media (min-width: 1800px) {
+      font-size: 300px;
+    }
     text-align: center;
   }
 
@@ -226,9 +290,12 @@ img {
 
   &__controls {
     width: 90%;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: var(--box-shadow);
+    margin: 20px auto;
 
     &__row {
       width: 90%;
