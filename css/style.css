@@ -184,7 +184,7 @@ img {
 }
 .timer__read__hidden {
   position: fixed;
-  top: -100%;
+  top: -2000px;
   transition: top 300ms;
 }
 .timer__read__show {
