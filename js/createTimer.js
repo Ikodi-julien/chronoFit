@@ -38,7 +38,7 @@ let isFirstCountdown = true;
 let timerPromise = 0;
 let timerTotalDuration = 0;
 
-let click = new Event("click");
+const click = new Event("click");
 /**
  *
  *
