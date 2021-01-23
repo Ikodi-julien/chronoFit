@@ -7,9 +7,10 @@
   </head>
   <body>
     <p>
-      Désolé, ce module est en cours de développement. <br />
-      Espérons qu'il sera bientôt utilisable ;-)
+      Houlà, il y a eu un problème... <br />
+      
     </p>
-    <button><a href="./indexLanding.php">Index</a></button>
+    <p><?php $_POST['error']; ?></p>
+    <button><a href="./indexLanding.php">Accueil</a></button>
   </body>
 </html>

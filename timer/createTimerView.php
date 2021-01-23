@@ -1,35 +1,89 @@
 <?php
 $css = "./style.css";
 $title = "Timer ChronoFit";
-$js = "./js/createTimer.js";
-$js2 = "./js/d&d.js";
-$js3 = "./node_modules/drag-drop-touch/DragDropTouch.js";
+$js0 = "./js/createTimerCRUD.js";
+$js1 = "./js/d&d.js";
+$js2 = "./node_modules/drag-drop-touch/DragDropTouch.js";
+$js3 = "./js/timelineChoice.js";
+
+/*--------------------------------------------------------------*/
+/* Traitement des données envoyées par le formulaire ci-dessous-*/
+/*--------------------------------------------------------------*/
+
 
 ob_start();
 ?>
 <h1>TIMER  <span>Create countdown</span></h1>
 
+<?php if (isset($info)) { echo "<p>" . $info . "</p>" ;} ?>
+
 <div class="timer">
   
-  <div class="timer__intervals">
-    <div class="timer__intervals__list" id="timerIntervals">
-      <div
+
+  <!-- ------------------------------------------------------------ -->
+  <!-- -------------------- FORMULAIRE TIMELINE ------------------- -->
+  <!-- ------------------------------------------------------------ -->
+    <div class="timer__form__box">
+      <select name="timeline-list" id="timelineList">
+          <option value="">Choisir une timeline</option>
+
+          <!-- BOUCLE SUR RESULTAT DE REQUÊTE -->
+          <?php 
+          for ($index=0; $index < count($timelines); $index++) { 
+            # code...
+          ?> 
+
+          <option value="<?= $timelines[$index];?>"><?= $timelines[$index] ;?></option>
+
+          <?php } ?>
+
+      </select>
+
+      <form  action="./indexTimer.php?routeur=manageTimeline" method="post" class="timer__intervals__form" >
+        <input type="text" 
+        name="timeline-name" 
+        id="timelineName"
+        placeholder="Ou saisir un nom pour créer une timeline"
+
+        <?php if (isset($timelineName)) {echo "value=".$timelineName ;} ?>
+        >
+
+      <input type="text"
+      name="timelineId"
+      id="timelineId"
+      value="<?php if (isset($timeline)) {echo $timeline->id();} ?>"
+      </input>
+
+        <div class="timer__intervals__form__controls__row">
+          <button type="submit" >Enregistrer</button>
+        </div>
+    
+      <div class="timer__intervals" id="timerIntervals">
+        <div
           id="empty__interval"
           class="drop"
           ondrop="drop_handler(event)"
           ondragover="dragover_handler(event)"
           ondragleave="dragleave_handler(event)"
         ></div>
+
+        <?php if (isset($intervals)) {echo $intervals;}?>
+
+      </div>
+
+      </form>
     </div>
 
-  </div>
+<!-- --------------------------------------------------------------------- -->
+<!-- ------------------ FORMULAIRE CREATION INTERVAL --------------------- -->
+<!-- --------------------------------------------------------------------- -->
 
   <div class="timer__creation">
     
     <label for="intervalName">Quoi ?</label>
-    <input type="text" name="name" class="timer__creation__intervalName" id="intervalName" >
+    <input type="text" name="name" class="timer__creation__intervalName" id="intervalName" value="un truc">
     <label for="duration">Durée (s):</label>
-    <input type="number" name="duration" class="timer__creation__duration" id="duration">
+    <input type="number" name="duration" class="timer__creation__duration" id="duration" value="10">
 
     <button id="addInterval" class="--big-button">Ajouter l'interval</button>
     <button id="goToReadTimelineButton" class="--big-button">Valider la Timeline</button>
@@ -45,15 +99,6 @@ ob_start();
     </div>
   </div>
 </div>
-
-<!-- ### A VOIR POUR CRUD TIMELINE ###
-
-<form action="indexTimer.php?routeur=readTimeline" method="post">
-  <textarea name="timelineData" id="timelineData" cols="10" rows="3"></textarea>
-  <button id="submitTimelineData" type="submit" class="--big-button">Valider Enregistrement</button>
-</form>
-
--->
 
 <div class="timer timer__read__hidden" id="timerRead">
   <div class="timer__read">

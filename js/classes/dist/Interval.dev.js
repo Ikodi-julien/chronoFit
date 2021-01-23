@@ -36,27 +36,32 @@ function () {
       // on créé une div qui contiendra l'interval dragable
       var intervalContainer = document.createElement('div');
       intervalContainer.classList.add('drop');
-      intervalContainer.setAttribute('id', 'full__' + this.id); // on créé la div interval
+      intervalContainer.id = 'full__' + this.id; // on créé la div interval
 
       var intervalDiv = document.createElement('div');
       intervalDiv.classList.add('interval');
-      intervalDiv.setAttribute('id', this.id);
-      intervalDiv.setAttribute('draggable', 'true');
-      intervalDiv.setAttribute('ondragstart', 'dragstart_handler(event)'); // on créé la div nom
+      intervalDiv.id = this.id;
+      intervalDiv.draggable = true;
+      intervalDiv.setAttribute('ondragstart', 'dragstart_handler(event)'); // on créé l'input "nom"
 
-      var nameDiv = document.createElement('div');
-      nameDiv.innerText = this.name;
-      nameDiv.classList.add('timer__intervals__interval__item');
-      nameDiv.classList.add('intervalName'); // on créé la div durée
+      var nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.name = 'name-' + this.id; // nameInput.id = 'name__' + this.id
 
-      var durationDiv = document.createElement('div');
-      durationDiv.setAttribute('id', 'duration__' + this.id);
-      durationDiv.innerText = this.duration;
-      durationDiv.classList.add('timer__intervals__interval__item');
-      durationDiv.classList.add('intervalDuration'); // on met nom et durée dans la div interval
+      nameInput.value = this.name;
+      nameInput.classList.add('timer__intervals__interval__item');
+      nameInput.classList.add('intervalName'); // on créé l'input durée
 
-      intervalDiv.appendChild(nameDiv);
-      intervalDiv.appendChild(durationDiv); // on met la div interval dans la div du début
+      var durationInput = document.createElement('input');
+      durationInput.type = 'number';
+      durationInput.name = 'duration-' + this.id;
+      durationInput.id = 'duration__' + this.id;
+      durationInput.value = this.duration;
+      durationInput.classList.add('timer__intervals__interval__item');
+      durationInput.classList.add('intervalDuration'); // on met nom et durée dans la div interval
+
+      intervalDiv.appendChild(nameInput);
+      intervalDiv.appendChild(durationInput); // on met la div interval dans la div du début
 
       intervalContainer.appendChild(intervalDiv); // on retourne l'élément
 

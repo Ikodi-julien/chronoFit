@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "nobileregular";
-  src: url("../fonts/nobile-regular-webfont.woff2") format("woff2"),
-    url("../fonts/nobile-regular-webfont.woff") format("woff");
+  font-family: 'nobileregular';
+  src: url('../fonts/nobile-regular-webfont.woff2') format('woff2'),
+    url('../fonts/nobile-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -21,7 +21,7 @@
 
 /* --- GENERAL --- */
 * {
-  font-family: "nobileregular";
+  font-family: 'nobileregular';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -138,14 +138,18 @@ img {
   background-color: white;
   // border: 1px dashed orange;
 
+  &__form__box {
+    width: 48%;
+  }
+
   &__intervals {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 50%;
+    justify-content: baseline;
+    width: 100%;
     padding: 1%;
     // border: 1px dashed blue;
-    &__list {
+    &__form {
       display: flex;
       flex-direction: column;
       // border: 1px dashed rgb(28, 139, 0);
@@ -330,6 +334,10 @@ img {
   color: var(--color-font-light);
   font-weight: 700;
   width: 90%;
+}
+
+#timelineId {
+  display: none;
 }
 
 // #timelineData {

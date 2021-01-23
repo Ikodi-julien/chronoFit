@@ -78,3 +78,11 @@ function readTimeline() {
   }
   require("timer/readTimerView.php");
 }
+
+function checkTimeline(array $array) {
+  foreach ($array as $key => $value) {
+    // On enlève les éventuels caractères dangereux
+    $array[$key] = htmlspecialchars($value);
+  }
+  return $array;
+}
