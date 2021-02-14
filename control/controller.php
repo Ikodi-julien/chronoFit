@@ -79,10 +79,20 @@ function readTimeline() {
   require("timer/readTimerView.php");
 }
 
-function checkTimeline(array $array) {
+function checkChars(array $array) {
   foreach ($array as $key => $value) {
     // On enlève les éventuels caractères dangereux
     $array[$key] = htmlspecialchars($value);
+    $array[$key] = str_replace(array('&', '~', '#', '|', '\\', '^', '@','$', '%', '+'), '-', $value );
   }
+
+  foreach ($array as $key => $value) {
+    $array[$key] = str_replace(array(']', '}' ), ')', $value);
+  }
+
+  foreach ($array as $key => $value) {
+    $array[$key] = str_replace(array('{', '[' ), '(', $value);
+  }
+
   return $array;
 }

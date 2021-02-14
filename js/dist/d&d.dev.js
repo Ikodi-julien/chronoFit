@@ -9,7 +9,15 @@ var event = new Event('build');
 function dragstart_handler(ev) {
   // On ajoute l'identifiant de l'élément cible à l'objet de transfert
   ev.dataTransfer.setData('application/my-app', ev.target.id);
-  console.log(ev.target.id);
+  console.log(ev.target.id); // Ajout d'un effet transparent sur l'élément en cours de drag
+
+  ev.target.classList.add('--isDragged');
+  ev.dataTransfer.dropEffect = 'move';
+}
+
+function dragend_handler(ev) {
+  // On retire l'effet transparent sur l'élément en cours de drag
+  ev.target.classList.remove('--isDragged');
   ev.dataTransfer.dropEffect = 'move';
 }
 

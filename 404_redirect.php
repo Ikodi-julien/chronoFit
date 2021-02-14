@@ -6,11 +6,12 @@
     <title>Module en développement</title>
   </head>
   <body>
-    <p>
-      Houlà, il y a eu un problème... <br />
-      
-    </p>
-    <p><?php $_POST['error']; ?></p>
-    <button><a href="./indexLanding.php">Accueil</a></button>
+  <div class="page404">
+  
+    <p>Houlà, il y a eu un problème... <br /></p>
+  
+  </div>
+
+    <button class="button"><a href="./indexLanding.php">Accueil</a></button>
   </body>
 </html>

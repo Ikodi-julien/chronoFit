@@ -42,7 +42,8 @@ function () {
       intervalDiv.classList.add('interval');
       intervalDiv.id = this.id;
       intervalDiv.draggable = true;
-      intervalDiv.setAttribute('ondragstart', 'dragstart_handler(event)'); // on créé l'input "nom"
+      intervalDiv.setAttribute('ondragstart', 'dragstart_handler(event)');
+      intervalDiv.setAttribute('ondragend', 'dragend_handler(event)'); // on créé l'input "nom"
 
       var nameInput = document.createElement('input');
       nameInput.type = 'text';
@@ -50,7 +51,10 @@ function () {
 
       nameInput.value = this.name;
       nameInput.classList.add('timer__intervals__interval__item');
-      nameInput.classList.add('intervalName'); // on créé l'input durée
+      nameInput.classList.add('intervalName'); // On crée une div pour recevoir la durée et son label :
+
+      var durationDiv = document.createElement('div');
+      durationDiv.classList.add('timer__intervals__interval__item__row'); // on créé l'input durée avec un label
 
       var durationInput = document.createElement('input');
       durationInput.type = 'number';
@@ -58,10 +62,16 @@ function () {
       durationInput.id = 'duration__' + this.id;
       durationInput.value = this.duration;
       durationInput.classList.add('timer__intervals__interval__item');
-      durationInput.classList.add('intervalDuration'); // on met nom et durée dans la div interval
+      durationInput.classList.add('intervalDuration');
+      var label = document.createElement('label');
+      label["for"] = 'duration-' + this.id;
+      label.textContent = 'Durée : '; // On met durationInput et son label dans la div
+
+      durationDiv.appendChild(label);
+      durationDiv.appendChild(durationInput); // on met nom et durée dans la div interval
 
       intervalDiv.appendChild(nameInput);
-      intervalDiv.appendChild(durationInput); // on met la div interval dans la div du début
+      intervalDiv.appendChild(durationDiv); // on met la div interval dans la div du début
 
       intervalContainer.appendChild(intervalDiv); // on retourne l'élément
 

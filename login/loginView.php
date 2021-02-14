@@ -18,7 +18,7 @@ ob_start();
     <input type="password" name="password" class="container__login__form__item" id="password">
   </div>
 
-  <button type="submit" class="--big-button">LOGIN</button>
+  <button type="submit" class="button__access">LOGIN</button>
 
 </form>
 

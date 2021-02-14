@@ -75,6 +75,7 @@ public function recreateIntervalsList() {
         draggable="true"
         id="interval-<?= $index;?>"
         ondragstart="dragstart_handler(event)"
+        ondragend="dragend_handler(event)"
         >
 
           <!-- // on créé l'input "nom" -->
@@ -84,10 +85,13 @@ public function recreateIntervalsList() {
           class="timer__intervals__interval__item intervalName">
 
           <!-- // on créé l'input durée -->
-          <input type="number" 
-          name="duration-interval<?= $index; ?>" 
-          value="<?= intval($listIntervals[1][$index]); ?>"
-          class="timer__intervals__interval__item intervalDuration">
+          <div class="timer__intervals__interval__item__row">
+            <label for="duration-interval<?= $index; ?>">Durée : </label>
+            <input type="number" 
+            name="duration-interval<?= $index; ?>" 
+            value="<?= intval($listIntervals[1][$index]); ?>"
+            class="timer__intervals__interval__item intervalDuration">
+          </div>
 
         </div>
       </div>
@@ -119,7 +123,6 @@ public function recreateIntervalsList() {
 
   public function setcontent($data) {
     if (is_array($data)) {
-
         $this->content = $data;
     }
 }

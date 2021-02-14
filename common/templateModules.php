@@ -15,17 +15,26 @@
   if (isset($js3)) {
     echo "<script src=".$js3."></script>";
   }
+  if (isset($js4)) {
+  echo "<script src=".$js4."></script>";
+  }
   ?>
   <title><?= $title; ?></title>
 </head>
 <body>
-
   <div class="container">
 
-    <?php 
+<?php 
     require('./common/blocks/header.html');
-    echo $content;?>
+?>
+
+
+    <?php 
+    echo $content;
+    ?>
 
   </div>
+  <script src="./vendor/feather.js"></script>
+  <script>feather.replace()</script>
 </body>
 </html>

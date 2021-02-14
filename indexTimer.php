@@ -29,7 +29,7 @@ if (isset($_GET['routeur'])) {
     if ($routeur == 'manageTimeline') { // DB => UPDATE ou CREATE
 
       // On htmlspecialchars les données dans POST
-      $timelineData = checkTimeline($_POST);
+      $timelineData = checkChars($_POST);
 
       // On créé un objet Timeline
       $timeline = new Timeline($timelineData);
@@ -39,26 +39,36 @@ if (isset($_GET['routeur'])) {
       if ($timeline->name() != "Vide") {
         // on check si le nom est déjà dans la base, 
         if ($timelineManager->isExistTimelineName($timeline->name())) {
-          // UPDATE :
+
+          /*----------- UPDATE --------------*/
+
           if ($affectedLines = $timelineManager->update($timeline)) {
-            // On indique que l'update n'a pas fonctionné
+            // On indique que l'update a fonctionné
             $info = 'Update OK ';
           } else {
-            // On indique que l'update a fonctionné
+            // On indique que l'update n'a pas fonctionné
             $info = 'Update NOK ';
           };
 
         } else {
-          // CREATE :
+
+          /*----------------- CREATE ----------------*/
+
           $info = 'On ajoute la timeline !';
-          $timelineManager->add($timeline);
+          if ($affectedLines = $timelineManager->add($timeline)) {
+            // On indique que l'ajout a fonctionné
+            $info = 'Timeline ajoutée';
+          } else {
+            // On indique que l'ajout n'a pas fonctionné
+            $info = 'Oups... ç\'a n\'a pas fonctionné.... ';
+          };
 
         }
         // finalement on redirige sur une route get pour réinitialiser le POST,
-        header('Location: ./indexTimer.php?routeur=setTimeline&timelineName=' . $timeline->name());
+        header('Location: ./indexTimer.php?routeur=setTimeline&timelineName=' . $timeline->name() . '&info=' . $info);
       
       } else {
-        $info = "Il faut choisir un nom pour enregistrer la timeline";
+        $info = "Il faut choisir un nom pour pouvoir enregistrer";
 
       }
     } elseif ($routeur == 'getTimeline') { // DB => READ
@@ -79,19 +89,28 @@ if (isset($_GET['routeur'])) {
     }
 
   } elseif ($routeur == 'setTimeline') { // La demande vient du "select" ou redirect
-    // On gère la demande à la base de données
-    $name = htmlspecialchars($_GET['timelineName']);
-    $timeline = $timelineManager->get($name);
+    if (isset($_GET['timelineName'])) {
+      // On gère la demande à la base de données
+      $name = $_GET['timelineName'];
+      if ($timeline = $timelineManager->get($name)) {
+      $info = 'Récup OK';
+
+      } else {
+      $info = 'Récup NOK' . $name;
+
+      };
+    // On affiche l'éventuelle info récup
+    if (isset($_GET['info'])) { $info = htmlspecialchars($_GET['info']);}
+
+    } else {
+      header('Location: ./404_redirect.php',);
+    }
 
   } else {
-    $info = 'La route n\'est pas définie';
+    header('Location: ./404_redirect.php',);
   }
 
-  // On récupe aussi les timelines pour affichage des noms dans le select
-  $timelines = $timelineManager->getTimelineNames();
-  // print_r($timelines);
   // Finalement on recréé la liste d'intervals
-
   if (isset($timeline)) {
 
     // On met un nom dans le champ nom de la timeline
@@ -102,7 +121,10 @@ if (isset($_GET['routeur'])) {
     $timeline->recreateIntervalsList();
     $intervals = ob_get_clean();
   }
-} 
+}
+
+// On récupe aussi les timelines pour affichage des noms dans le select
+$timelines = $timelineManager->getTimelineNames();
 
 // On affiche le tout
 require('./timer/createTimerView.php');
