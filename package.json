@@ -1,0 +1,22 @@
+{
+  "name": "chronofit",
+  "version": "1.0.0",
+  "description": "Sport app, CRUD timelines and exercices to make trainings",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ikodi-julien/chronoFit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ikodi-julien/chronoFit/issues"
+  },
+  "homepage": "https://github.com/Ikodi-julien/chronoFit#readme",
+  "dependencies": {
+    "drag-drop-touch": "^1.3.1"
+  }
+}

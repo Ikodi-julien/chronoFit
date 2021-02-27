@@ -6,7 +6,7 @@ ob_start();
 ?>
 
 
-<form action="" method="post" class="container__login__form">
+<form action="./index.php" method="post" class="container__login__form">
 
   <div class="container__login__form__row">
     <label for="pseudo" class="container__login__form__item">Pseudo</label>
@@ -26,6 +26,6 @@ ob_start();
 
 <?php
 $content = ob_get_clean();
-require("common/template.php");
+require("./my_modules/views/template.php");
 
 ?>

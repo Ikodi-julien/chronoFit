@@ -1,0 +1,11 @@
+BODYPART: id, name
+WORK, 0N BODYPART, 11 EXERCICE
+EXERCICE: id, name, description
+DEFINE, 11 EXERCICE, 0N MAINCAT
+MAINCAT: id, name
+
+LEVEL: id, name
+RANKS, 11 USER, 0N LEVEL
+USER: id, firstname, lastname, pseudo, email, password
+USE, 0N USER, 11 TIMELINE
+TIMELINE: id, name, content
