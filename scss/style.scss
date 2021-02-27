@@ -467,10 +467,11 @@ img {
     align-items: center;
     width: 100%;
     box-shadow: var(--box-shadow);
+    background-color: rgba(255, 255, 255, 0.9);
 
     &__hidden {
       position: fixed;
-      top: -2000px;
+      top: -3000px;
       transition: top 300ms;
     }
 
@@ -622,6 +623,17 @@ img {
     width: 100%;
     border: none;
   }
+}
+
+#bg-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: auto;
+  margin: auto;
+  z-index: -100;
+  background-size: cover;
 }
 
 .drop {

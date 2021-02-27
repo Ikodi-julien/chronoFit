@@ -1,6 +1,6 @@
 import { Interval } from './classes/Interval.js';
 import { Chrono } from './classes/Chrono.js';
-import { TSM } from './playTimerSound.js';
+import { videoManager } from './bgVideo.js';
 /*-------------------------------------*/
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const intervalsContainer = document.getElementById('timerIntervals');
   const totalTimePreview = document.getElementById('totalTimePreview');
   const timerReadPage = document.getElementById('timerRead');
+  const videoBg = document.getElementById('bg-video');
   const timelineName = document.getElementById('timelineName');
 
   let intervalsCompteur = 0;
@@ -175,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (durationList.length) {
       // console.log('Timeline validée');
       timerReadPage.classList.add('timer__read__show');
+      videoBg.classList.add('timer__read__show');
 
       // Affiche le temps total et l'exo suivant
       totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList));
@@ -293,6 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // On escamote la page lecture
     timerReadPage.classList.remove('timer__read__show');
+    videoBg.classList.remove('timer__read__show');
 
     // console.log('Quit : ' + durationList + '/' + exoNameList);
   };
@@ -474,9 +477,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   startCountDownButton.addEventListener('click', startAllCountdowns);
 
-  /*--- Function qui prépare le lancement du son, permet le wake-lock... ---*/
-  TSM.readyTimerSound(startCountDownButton);
-  TSM.stopTimerSound(stopChronoButton);
+  /*--- Function qui prépare le lancement de la vidéo, permet le wake-lock... ---*/
+  videoManager.readyVideo(startCountDownButton);
+  videoManager.stopVideo(stopChronoButton);
 
   stopChronoButton.addEventListener('click', stopAllCountdowns);
 

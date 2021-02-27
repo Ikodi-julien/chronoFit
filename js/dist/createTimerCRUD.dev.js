@@ -4,7 +4,7 @@ var _Interval = require("./classes/Interval.js");
 
 var _Chrono = require("./classes/Chrono.js");
 
-var _playTimerSound = require("./playTimerSound.js");
+var _bgVideo = require("./bgVideo.js");
 
 /*-------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var intervalsContainer = document.getElementById('timerIntervals');
   var totalTimePreview = document.getElementById('totalTimePreview');
   var timerReadPage = document.getElementById('timerRead');
+  var videoBg = document.getElementById('bg-video');
   var timelineName = document.getElementById('timelineName');
   var intervalsCompteur = 0;
   var countdownTotal = []; // On créé un ojet event, sera lancer pour déclencher les rafraichissements
@@ -163,7 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (durationList.length) {
       // console.log('Timeline validée');
-      timerReadPage.classList.add('timer__read__show'); // Affiche le temps total et l'exo suivant
+      timerReadPage.classList.add('timer__read__show');
+      videoBg.classList.add('timer__read__show'); // Affiche le temps total et l'exo suivant
 
       totalTimeDisplay.innerText = newTotalTimeString(returnSum(durationList));
       nextExoNameDisplay.innerText = exoNameList[0];
@@ -269,7 +271,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     isFirstCountdown = true; // On escamote la page lecture
 
-    timerReadPage.classList.remove('timer__read__show'); // console.log('Quit : ' + durationList + '/' + exoNameList);
+    timerReadPage.classList.remove('timer__read__show');
+    videoBg.classList.remove('timer__read__show'); // console.log('Quit : ' + durationList + '/' + exoNameList);
   };
   /**
    * Stops a chrono or countdown
@@ -460,11 +463,11 @@ document.addEventListener('DOMContentLoaded', function () {
   addIntervalButton.addEventListener('click', addInterval);
   goToReadTimelineButton.addEventListener('click', goToReadTimeline);
   startCountDownButton.addEventListener('click', startAllCountdowns);
-  /*--- Function qui prépare le lancement du son, permet le wake-lock... ---*/
+  /*--- Function qui prépare le lancement de la vidéo, permet le wake-lock... ---*/
 
-  _playTimerSound.TSM.readyTimerSound(startCountDownButton);
+  _bgVideo.videoManager.readyVideo(startCountDownButton);
 
-  _playTimerSound.TSM.stopTimerSound(stopChronoButton);
+  _bgVideo.videoManager.stopVideo(stopChronoButton);
 
   stopChronoButton.addEventListener('click', stopAllCountdowns);
   timerReadClose.addEventListener('click', quitReadPage);

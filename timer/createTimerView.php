@@ -134,19 +134,27 @@ ob_start();
 <!-- ------------------ TIMER READ - VIEW -------------------------------- -->
 <!-- --------------------------------------------------------------------- -->
 
-<audio id="tictac" src="./sounds/tictac.ogg" loop ></audio>
 
 <div class="timer timer__read__hidden" id="timerRead">
+
+<!-- Insertion d'une vidéo en background -->
+<video loop class="timer__read__hidden" id="bg-video">
+  <source src="./videos/video.mp4" type="video/mp4">
+
+</video>
+
   <div class="timer__read">
     <div class="timer__read__close" id="timerReadClose"><i data-feather="x"></i></div>
     <div class="timer__read__exoName"id="exoNameDisplay"></div>
     <div class="timer__timeDisplay"  id="timerDisplay">00:00</div>
 
     <div class="timer__controls">
+      
       <div class="timer__controls__row">
         <button id="timerStartButton" class="button__timerReadControls"><i data-feather="play"></i></button>
         <button id="timerPauseButton" class="button__timerReadControls"><i data-feather="pause"></i></button>
       </div>
+      
       <div class="timer__controls__row">
         <button id="previousCountdown" class="button__timerReadControls"><i data-feather="skip-back"></i></button>
         <button id="nextCountdown" class="button__timerReadControls"><i data-feather="skip-forward"></i></button>
