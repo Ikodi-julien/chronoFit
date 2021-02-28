@@ -1,11 +1,11 @@
 <?php
-$css = "./style.css";
+$css = "style.css";
 $title = "Timer ChronoFit";
-$js0 = "./js/createTimerCRUD.js";
-$js1 = "./js/d&d.js";
-$js2 = "./node_modules/drag-drop-touch/DragDropTouch.js";
-$js3 = "./js/timelineChoices.js";
-$js4 = "./js/show_info.js";
+$jsTimer = "createTimerCRUD.js";
+$js1 = "d&d.js";
+$js2 = "../../node_modules/drag-drop-touch/DragDropTouch.js";
+$js3 = "timelineChoices.js";
+$js4 = "show_info.js";
 
 /*--------------------------------------------------------------*/
 /* Traitement des données envoyées par le formulaire ci-dessous-*/
@@ -15,15 +15,6 @@ $js4 = "./js/show_info.js";
 ob_start();
 ?>
 
-
-<?php if (isset($info) && $info != "") {
-  echo '<div class="timer__info" id="timerInfo">' . $info . '</div>';
-  $info = null;
-  } ?>
-
-
-
-
 <h1>TIMER  <span>Récupérer ou créer une Timeline</span></h1>
 
     <div class="timer__select__row">
@@ -32,19 +23,22 @@ ob_start();
   
           <!-- BOUCLE SUR RESULTAT DE REQUÊTE -->
           <?php
-          for ($index=0; $index < count($timelines); $index++) {
+          for ($index=0; $index < count($timerData['timelines']); $index++) {
             # code...
           ?>
   
-          <option value="<?= $timelines[$index];?>"><?= $timelines[$index] ;?></option>
+          <option value="<?= $timerData['timelines'][$index];?>"><?= $timerData['timelines'][$index] ;?></option>
   
           <?php } ?>
   
       </select>
   
+<?php if (isset($_SESSION['login']) && $_SESSION['login']) { ?>
             <div class="timer__intervals__falseSubmit">
               <button type="button" class="button__timeline" id="timelineFalseSubmit">Enregistrer</button>
             </div>
+      <?php } ?>
+      
     </div>
     
     
@@ -65,8 +59,10 @@ ob_start();
           class="timer__intervals__form__nameInput"
           id="timelineName"
           placeholder="Ou saisir un nom pour créer une timeline"
-          value="<?php if (isset($timelineName)) {echo $timelineName;} ?>"
-          >
+          value="<?php if ($timerData['timeline'] !== null) {
+            $timerData['timeline']->name();
+          } ?>"
+          />
   
 
         </div>
@@ -74,8 +70,10 @@ ob_start();
         <input type="text"
         name="timelineId"
         id="timelineId"
-        value="<?php if (isset($timeline)) {echo $timeline->id();} ?>"
-        </input>
+          value="<?php if ($timerData['timeline'] !== null) {
+            $timerData['timeline']->id();
+          } ?>"
+        />
 
         <div class="timer__intervals__submitBox" id="submitBox">
           <p>Etes-vous sûr de vouloir enregistrer cette Timeline ?</p>
@@ -92,7 +90,10 @@ ob_start();
             ondragleave="dragleave_handler(event)"
           ></div>
 
-        <?php if (isset($intervals)) {echo $intervals;}?>
+        <?php if ($timerData['timeline'] !== null) {
+          
+          $timerData['timeline']->recreateIntervalsList();
+        }?>
 
       </div>
 
@@ -136,12 +137,11 @@ ob_start();
 
 
 <div class="timer timer__read__hidden" id="timerRead">
-
 <!-- Insertion d'une vidéo en background -->
-<video loop class="timer__read__hidden" id="bg-video">
-  <source src="./videos/video.mp4" type="video/mp4">
+  <video loop class="timer__read__hidden" id="bg-video">
+    <source src="./public/videos/video.mp4" type="video/mp4">
 
-</video>
+  </video>
 
   <div class="timer__read">
     <div class="timer__read__close" id="timerReadClose"><i data-feather="x"></i></div>
@@ -170,6 +170,6 @@ ob_start();
 
 <?php
 $content = ob_get_clean();
-require("./common/templateModules.php");
+require("./my_modules/views/template.php");
 
 ?>

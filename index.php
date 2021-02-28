@@ -1,24 +1,42 @@
 <?php
 session_start();
-require("./my_modules/main/controller.php");
-require("./my_modules/login/loginController.php");
-require("./my_modules/main/model.php");
+require("./my_modules/main/mainController.php");
 
-spl_autoload_register('loadClass');
+/* --- ROUTEUR LANDING--- */
 
-/* --- ROUTEUR LOGIN --- */
+if (isset($_GET['routeur'])) {
 
-if (isset($_POST['pseudo']) && isset($_POST['mdp'])) {
-  $pseudo = htmlspecialchars($_POST['pseudo']);
-  $pass = htmlspecialchars($_POST['mdp']);
+  $routeur = htmlspecialchars($_GET['routeur']);
 
-  stdLoginControl($pseudo, $pass);
+  if ($routeur == 'disconnect') {
 
-// Cookie login
+    $_SESSION = null;
+    $_SESSION['message'] = 'Les infos de connexion ont été effacées';
+    landingView();
+
+  } elseif ($routeur == "timer") {
+
+    timer();
+
+  } elseif ($routeur == "getTrainings") {
+
+    training();
+
+  } elseif ($routeur == "getExercices") {
+
+    exercice();
+
+  } elseif ($routeur == "profil") {
+
+    profil();
+  
+  } elseif ($routeur = 'login') {
+    
+    login();
+  }
+
 } else {
 
-  require('./my_modules/login/loginView.php');
+  landingView();
 
 }
-
-

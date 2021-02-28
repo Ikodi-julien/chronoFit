@@ -2,7 +2,7 @@
 
 class Exercice {
 
-  protected $id, $mainCat, $bodyPart, $name, $description;
+  protected $id, $name, $description, $mainCat_id, $bodyPart_id;
 
   public function __construct($data) {
     $this->hydrate($data);
@@ -32,16 +32,14 @@ class Exercice {
       }
   }
 
-  public function setMainCat($mainCat) {
-    if (is_string($mainCat)) {
-        $this->mainCat = $mainCat;
-    }
-}
-
-public function setBodyPart($bodyPart) {
-  if (is_string($bodyPart)) {
-      $this->bodyPart = $bodyPart;
+  public function setMainCat_id($mainCat_id) {
+    $mainCat_id = (int) $mainCat_id;
+    $this->mainCat_id = $mainCat_id;
   }
+
+public function setBodyPart_id($bodyPart_id) {
+  $body_part_id = (int) $bodyPart_id;
+      $this->bodyPart_id = $bodyPart_id;
 }
 
 public function setName($name) {
@@ -58,8 +56,8 @@ public function setDescription($description) {
 
   //GETTERS
   public function id() {return $this->id;}
-  public function mainCat() {return $this->mainCat;}
-  public function bodyPart() {return $this->bodyPart;}
+  public function mainCat_id() {return $this->mainCat_id;}
+  public function bodyPart_id() {return $this->bodyPart_id;}
   public function name() {return $this->name;}
   public function description() {return $this->description;}
 

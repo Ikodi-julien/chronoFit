@@ -1,10 +1,16 @@
 <?php
 
-class Profil extends DBConnexion{
+class User {
   
-  protected $id, $pseudo, $firstname, $lastname, $password, $email;
+  protected $id,
+  $pseudo,
+  $firstname,
+  $lastname,
+  $password,
+  $email,
+  $levelId;
   
-  public function __construct($data) {return $this->hydrate($data);}
+  public function __construct(array $data) {return $this->hydrate($data);}
   
   // Hydratation Methods
   public function hydrate($data) {
@@ -16,7 +22,7 @@ class Profil extends DBConnexion{
       if (method_exists($this, $method)) {
         $this->$method($value);
       } else {
-        echo 'Problème d\'hydratation'.$method;
+        echo 'Problème d\'hydratation '.$method;
       }
     }
   }
@@ -59,6 +65,12 @@ class Profil extends DBConnexion{
     }
   }
 
+    public function setLevel_id($level_id) {
+    $level_id = (int) $level_id;
+      if ($level_id > 0) {
+          $this->levelId = $level_id;
+      }
+  }
   
   //GETTERS
   public function id() {return $this->id;}
@@ -67,4 +79,5 @@ class Profil extends DBConnexion{
   public function lastname() {return $this->lastname;}
   public function email() {return $this->email;}
   public function password() {return $this->password;}
+  public function levelId() {return $this->levelId;}
 }

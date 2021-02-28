@@ -1,6 +1,7 @@
 <?php
 $css = "style.css";
 $title = "PROFIL ChronoFit";
+$js1 = "show_info.js";
 
 ob_start();
 ?>

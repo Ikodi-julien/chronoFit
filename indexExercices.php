@@ -1,12 +1,6 @@
 <?php
-
-require("control/controller.php");
-require("common/model.php");
-
-spl_autoload_register('loadClass');
-
-$exoManager = new ExercicesManager();
-$listExo = $exoManager->getList();
+session_start();
+require("./my_modules/exercice/exerciceController.php");
 
 /* --- ROUTEUR EXERCICE --- */
 
@@ -14,17 +8,26 @@ if (isset($_GET['routeur'])) {
 
   $routeur = htmlspecialchars($_GET['routeur']);
 
-  if ($routeur == 'disconnect') {
+  if ($routeur == "updateExoView") {
 
-    login();
+    
+    /* --- Modifier un exercice et l'enregistrer en base de données ---*/
+    if (isset($_GET['exoId'])) {
+      
+      $exoId = htmlspecialchars($_GET['exoId']);
 
-  } elseif ($routeur == "landing") {
-
-    landing();
-  
-  } elseif ($routeur == "updateExoView") {
-
-    require("exercice/views/updateExoView.php");
+        if ($exo = getExo($exoId)) {
+          
+          require('./my_modules/exercice/updateExoView.php');
+          
+      } else {
+        
+        $message = 'On a pas trouvé l\'exercice demandé';
+        header('Location: indexExercices.php');
+      } 
+    } else {
+      header('Location: 404_redirect.php');
+    }
 
   } elseif ($routeur == "updateExo") {
 
@@ -155,5 +158,6 @@ if (isset($_GET['routeur'])) {
   }
 } else {
 
-  require("exercice/views/listExoView.php");
+  $listExo = getExoList();
+  require("./my_modules/exercice/listExoView.php");
 }

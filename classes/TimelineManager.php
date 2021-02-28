@@ -9,7 +9,7 @@ class TimelineManager extends DBConnexion {
     $content = json_encode($timeline->content());
     //Requête d'insertion d'une instance de Timeline'
     $reqAdd = $this->db->prepare('
-    INSERT INTO timeline(timelineName, content)
+    INSERT INTO timeline(name, content)
     VALUES(:name, :content)
     ');
 
@@ -64,7 +64,7 @@ class TimelineManager extends DBConnexion {
     try {
     //Requête d'un objet Timeline à partir de son name
     $reqName = $this->db->prepare('
-    SELECT * FROM timeline WHERE timelineName=:name');
+    SELECT * FROM timeline WHERE `name`=:name');
 
     $reqName->execute(array(
         'name' => $timelineName,
@@ -109,7 +109,7 @@ class TimelineManager extends DBConnexion {
   public function isExistTimelineName(String $timelineName) {
 
     $rq = $this->db->prepare('
-    SELECT * FROM timeline WHERE timelinename=:name');
+    SELECT * FROM `timeline` WHERE `name`=:name');
 
     $rq->execute(array(
         'name' => $timelineName,
@@ -124,7 +124,7 @@ class TimelineManager extends DBConnexion {
 
   public function getTimelineNames() {
     //Retourne la liste de toutes les noms de timeline
-    $reqTimelines = $this->db->query('SELECT timelineName FROM timeline');
+    $reqTimelines = $this->db->query('SELECT `name` FROM timeline');
 
     while ($data = $reqTimelines->fetch(PDO::FETCH_COLUMN)) {
       $timelineNames[] = $data;

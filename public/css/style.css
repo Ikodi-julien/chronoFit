@@ -60,7 +60,6 @@ header {
   width: 100%;
   height: 16%;
   max-height: 80px;
-  background: var(--color-back-app);
 }
 header nav {
   height: 100%;
@@ -176,13 +175,16 @@ img {
 }
 .button__timerReadControls {
   background: var(--color-button-controls);
-  width: 90%;
+  width: 20vw;
+  max-width: 80px;
+  height: 20vw;
+  max-height: 80px;
+  border-radius: 50%;
   min-height: 40px;
   font-size: var(--font-size-p-desktop);
   font-weight: bold;
   color: var(--color-font-light);
   margin: 10px;
-  border-radius: var(--border-radius);
   cursor: pointer;
 }
 @media screen and (max-width: 700px) {
@@ -222,17 +224,20 @@ img {
 /* --- LOGIN ---*/
 .container__login__form {
   width: 80%;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   margin: 10px;
   box-shadow: var(--box-shadow);
 }
-.container__login__form .container__login__form__item {
+.container__login__form__item {
   margin: 20px 10px;
+  width: 80%;
 }
-.container__login__form .container__login__form__row {
-  display: flex;
+.container__login__form__lostPass {
+  text-align: center;
+  color: inherit;
 }
 
 /* --- LANDING --- */
@@ -247,6 +252,22 @@ img {
 }
 
 /* --- EXOS --- */
+.exo__update {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+.exo__update__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+}
+.exo__update__form__input {
+  margin: 20px 0;
+}
+
 /* --- TIMER --- */
 .timer {
   display: flex;
@@ -297,14 +318,13 @@ img {
 }
 .timer__intervals__form__controls__row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: start;
 }
 .timer__intervals__form__nameInput {
   border: none;
   border-bottom: 2px solid var(--color-blueGray);
   height: var(--font-size-h2-desktop);
-  min-width: 100px;
+  width: 90%;
 }
 @media screen {
   .timer__intervals__form__nameInput {
@@ -435,24 +455,38 @@ img {
 }
 .timer__read__exoName {
   width: 90%;
-  font-size: var(--font-size-XXL);
-  height: 15vw;
+  height: 150px;
   max-height: 150px;
+  font-size: 120px;
+  line-height: 130px;
   text-align: center;
 }
-@media (min-width: 700px) {
+@media screen and (max-width: 1800px) {
   .timer__read__exoName {
-    font-size: 60px;
-  }
-}
-@media (min-width: 1400px) {
-  .timer__read__exoName {
-    font-size: 80px;
-  }
-}
-@media (min-width: 1800px) {
-  .timer__read__exoName {
+    height: 140px;
     font-size: 100px;
+    line-height: 110px;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .timer__read__exoName {
+    height: 130px;
+    font-size: 80px;
+    line-height: 85px;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .timer__read__exoName {
+    height: 120px;
+    font-size: 55px;
+    line-height: 60px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .timer__read__exoName {
+    height: 100px;
+    font-size: 35px;
+    line-height: 36px;
   }
 }
 .timer__read__row {
@@ -529,6 +563,7 @@ img {
 .timer__controls__row {
   width: 90%;
   display: flex;
+  justify-content: center;
 }
 
 .interval {

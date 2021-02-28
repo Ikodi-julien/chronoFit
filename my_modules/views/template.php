@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/<?= $css;?>">
-  <script type= "module" src="<?= $js; ?>"></script>
-  <script src="<?= $js2; ?>"></script>
-  <title><?= $title; ?></title>
-</head>
+<?php require('./my_modules/views/blocks/head.php'); ?>
+
 <body>
   <div class="container">
-    <header>
-      <img src="img/chronoFit.png" alt="logo chronoFit">
-    </header>
-
-    <?php 
-    echo $content;?>
+    
+<?php
+require('./my_modules/views/blocks/message.php');
+require('./my_modules/views/blocks/header.php');
+echo $content;
+?>
 
   </div>
+  <script src="./vendor/feather.js"></script>
+  <script>feather.replace()</script>
 </body>
 </html>

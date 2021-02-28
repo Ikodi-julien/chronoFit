@@ -1,6 +1,8 @@
 <?php
 $css = "style.css";
 $title = "Création d'exercice - ChronoFit";
+$js1 = "show_info.js";
+
 $mainCatManager = new MainCatManager;
 $bodyPartManager = new BodyPartManager;
 $mainCatList = $mainCatManager->getList();
@@ -43,6 +45,6 @@ ob_start();
 
 <?php
 $content = ob_get_clean();
-require("common/template.php");
+require("./my_modules/views/template.php");
 
 ?>

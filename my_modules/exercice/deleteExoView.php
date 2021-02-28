@@ -1,6 +1,7 @@
 <?php
 $css = "style.css";
 $title = "Supprimer un exercice - ChronoFit";
+$js1 = "show_info.js";
 
 ob_start();
 
@@ -52,6 +53,6 @@ if (isset($_GET['exoId'])) {
 
 $content = ob_get_clean();
 
-require("common/template.php");
+require("./my_modules/views/template.php");
 
 ?>

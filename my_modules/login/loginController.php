@@ -1,39 +1,101 @@
 <?php
+/*------------- VIEWS ------------------------------*/
 
-function stdLoginControl($pseudo, $pass) {
+function createProfilView() {
   
-  // On vérifie si le pseudo et le mot de passe existent
-  $dataProfil = rqProfil($pseudo);
+  require('./my_modules/login/createProfilView.php');
+}
 
-  if (!$dataProfil) {
-    $_POST['pseudo'] = null;
-    $_POST['mdp'] = null;
-    $_SESSION['identification'] = 'Erreur de pseudo ou de mot de passe...';
-    header('Location: index.php');
 
-  } else {
+/*----------------- CONTROLLEUR --------------------*/
+
+function stdLoginControl($data) {
+  
+  $email = htmlspecialchars($data['email']);
+  $password = htmlspecialchars($data['password']);
+  // On vérifie si l'email' et le mot de passe existent
+  $userManager = new UserManager();
+  $user = $userManager->getByEmail($email);
+
+  if ($user) {
+    
     // Comparaison pass envoyé et celui dans la base.
-    $is_pass_correct = password_verify($pass, $dataProfil['mdp']);
-
-    // Comparaison mdp saisi et celui en bdd
-    if ($is_pass_correct) {
-        $_SESSION['pseudo'] = $pseudo;
-        $_SESSION['style'] = $dataProfil['style'];
-        $_SESSION['avatar'] = $dataProfil['avatar'];
-
-        // On met les cookies si connexion auto coché
-        if (isset($_POST['auto'])) {
-        $pass_hache = password_hash($pass, PASSWORD_DEFAULT);
-        setcookie('pseudo', $pseudo, time() + 3600*24*365, null, null, false, true);
-        setcookie('pass_hache', $pass_hache, time() + 3600*24*365, null, null, false, true);
-        }
+    if (password_verify($password, $user->password())) {
+      $_SESSION['pseudo'] = $user->pseudo();
+      $_SESSION['login'] = true;
+      $_SESSION['message'] = 'Login ok';
         
-        // Redirection vers raceView.php
-        require("./view/raceViews/racesIndexView.php");
+      return true;
+    } 
+  }
+      
+  $_POST['email'] = null;
+  $_POST['password'] = null;
+  $_SESSION['message'] = 'Erreur de pseudo ou de mot de passe...';
+  
+  return false;
+
+  //       // On met les cookies si connexion auto coché
+  //       if (isset($_POST['auto'])) {
+  //       $pass_hache = password_hash($pass, PASSWORD_DEFAULT);
+  //       setcookie('pseudo', $pseudo, time() + 3600*24*365, null, null, false, true);
+  //       setcookie('pass_hache', $pass_hache, time() + 3600*24*365, null, null, false, true);
+  //       }
         
-    } else {
-      $_SESSION['identification'] = 'Erreur de pseudo ou de mot de passe...';
-      header('Location: index.php');
+  //       // Redirection vers raceView.php
+  //       require("./view/raceViews/racesIndexView.php");
+        
+  //   } else {
+  //     $_SESSION['identification'] = 'Erreur de pseudo ou de mot de passe...';
+  //     header('Location: index.php');
+  //   }
+  // }
+}
+
+function createProfil($dataArray) {
+
+  // Ici faire une vérif si champs vides <-->
+  foreach($dataArray as $key => $value) {
+    if ($value === '') {
+      
+    $_SESSION['message'] = "Tous les champs doivent être remplis";
+    
+    return false;
     }
+  }
+  
+  // Are passwords the same ?
+  if ($dataArray['password'] !== $dataArray['password_confirm']) {
+    
+     $_SESSION['message'] = "Les mots de passe sont différents";
+    return false;
+  }
+  
+  // Ici hash du password <-->
+  $dataArray['password'] = password_hash($dataArray['password'],PASSWORD_DEFAULT);
+  
+  // On supprime l'entrée qui ne servira plus
+  unset($dataArray['password_confirm']);
+  
+  $user = new User($dataArray);
+  
+  // Is email in DB ?
+  $userManager = new UserManager();
+  
+  if ($userManager->getByEmail($user->email())) {
+    
+    $_SESSION['message'] = 'Cette email existe déjà en DB...';
+    return false;
+  }
+  
+  // Create profil in DB
+  if ($userManager->add($user)) {
+    $_SESSION['message'] = 'Profile créé';
+    
+    return true;
+  } else {
+    $_SESSION['message'] = 'Hum... problème avec la base de données...';
+    
+    return false;
   }
 }

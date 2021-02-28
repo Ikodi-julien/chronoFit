@@ -1,6 +1,7 @@
 <?php
 $css = "style.css";
 $title = "Liste exercices - ChronoFit";
+$js1 = "show_info.js";
 
 ob_start();
 ?>
@@ -12,11 +13,11 @@ ob_start();
     foreach ($listExo as $exo) {
       echo '<fieldset>';
       echo '<p>Nom : ' . $exo->name() . '</p>';
-      echo '<p>Catégorie : ' . $exo->mainCat() . '</p>';
-      echo '<p>Partie du corp ciblée : ' . $exo->bodyPart() . '</p>';
+      echo '<p>Catégorie : ' . getMainCat($exo) . '</p>';
+      echo '<p>Partie du corp ciblée : ' . getBodyPart($exo) . '</p>';
       echo '<p>Description : ' . $exo->description() . '</p>';
-      echo '<a href="exerciceIndex.php?routeur=updateExoView&amp;exoId='. $exo->id() . '"><button>Modifier</button></a>';
-      echo '<a href="exerciceIndex.php?routeur=deleteExoView&amp;exoId='. $exo->id() . '"><button>Supprimer</button></a>';
+      echo '<a href="indexExercices.php?routeur=updateExoView&amp;exoId='. $exo->id() . '"><button>Modifier</button></a>';
+      echo '<a href="indexExercices.php?routeur=deleteExoView&amp;exoId='. $exo->id() . '"><button>Supprimer</button></a>';
       echo '</fieldset>';
     }
   ?>
@@ -27,6 +28,6 @@ ob_start();
 
 <?php
 $content = ob_get_clean();
-require("common/templateModules.php");
+require("./my_modules/views/template.php");
 
 ?>

@@ -1,25 +1,33 @@
 <?php
 $title = "Connexion";
 $css = "style.css";
+$js1 = "show_info.js";
 
 ob_start();
 ?>
 
 
-<form action="./index.php" method="post" class="container__login__form">
+<form action="indexLogin.php" method="post" class="container__login__form">
 
-  <div class="container__login__form__row">
-    <label for="pseudo" class="container__login__form__item">Pseudo</label>
-    <input type="text" name="pseudo" class="container__login__form__item" id="pseudo" >
-  </div>
+    <input 
+    type="email" 
+    name="email" 
+    placeholder="Email"
+    class="container__login__form__item" 
+    id="pseudo" >
 
-  <div class="container__login__form__row">
-    <label for="password" class="container__login__form__item">Mot de passe</label>
-    <input type="password" name="password" class="container__login__form__item" id="password">
-  </div>
+    <input 
+    type="password" 
+    name="password" 
+    placeholder="Mot de passe"
+    class="container__login__form__item" 
+    id="password">
 
   <button type="submit" class="button__access">LOGIN</button>
 
+<a href="indexLogin.php?routeur=createProfilView" class="container__login__form__lostPass">
+  <p >Créer un profil</p>
+</a>
 </form>
 
 

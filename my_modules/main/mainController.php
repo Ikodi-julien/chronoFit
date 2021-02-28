@@ -3,7 +3,7 @@
 
 function login() {
 
-  header('Location: index.php');
+  header('Location: indexLogin.php');
 
 }
 
@@ -11,7 +11,7 @@ function login() {
 
 function landing() {
 
-  header('Location: indexLanding.php');
+  header('Location: index.php');
 
 }
 
@@ -40,7 +40,7 @@ function profil() {
 
 function landingView() {
 
-  require("landing/landingView.php");
+  require("./my_modules/landing/landingView.php");
 
 }
 
