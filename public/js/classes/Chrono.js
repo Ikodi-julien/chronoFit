@@ -82,14 +82,14 @@ class Chrono {
   playFirstBip() {
     console.log("on fait Bip !");
 
-    let firstBip = new Audio("./sounds/first_bips.wav");
+    let firstBip = new Audio("./public/sounds/first_bips.wav");
     firstBip.play();
   }
 
   playFinalBip() {
     console.log("on fait le bip final !");
 
-    let finalBip = new Audio("./sounds/final_bip.wav");
+    let finalBip = new Audio("./public/sounds/final_bip.wav");
     finalBip.play();
   }
 }
